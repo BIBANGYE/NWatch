@@ -1,11 +1,3 @@
-/*
- * Project: N|Watch
- * Author: Zak Kemble, contact@zakkemble.co.uk
- * Copyright: (C) 2013 by Zak Kemble
- * License: GNU GPL v3 (see License.txt)
- * Web: http://blog.zakkemble.co.uk/diy-digital-wristwatch/
- */
-
 #include "common.h"
 #include "led.h"
 #include "stmflash.h"
@@ -17,9 +9,9 @@ static byte nextAlarm;
 static byte nextAlarmDay;
 static bool alarmSetOff;
 static draw_f oldDrawFunc;
-static button_f oldBtn1Func;
-static button_f oldBtn2Func;
-static button_f oldBtn3Func;
+//static button_f oldBtn1Func;
+//static button_f oldBtn2Func;
+//static button_f oldBtn3Func;
 
 static alarm_s eepAlarms[ALARM_COUNT] EEMEM   = {{22, 45, 0}, {01, 48, 4}, {7, 45, 63}, {9, 4, 0}, {3, 1, 7}};
 //测试出来占了3个字节
@@ -36,51 +28,37 @@ static display_t draw(void);
 
 static void saveAlarmtoBKP (byte num, alarm_s time)
 {
+    num = 3 * num; //3个16位 存放一个alarm_t
 
-//    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE); //使能PWR和BKP外设时钟
-//    RTC_WaitForLastTask(); //等待最近一次对RTC寄存器的写操作完成
-//    PWR_BackupAccessCmd(ENABLE); //使能后备寄存器访问
+    u16  BKPbuf[3];
 
-//    num = 3 * num; //3个16位 存放一个alarm_t
+    BKPbuf[0] = time.hour;
+    BKPbuf[1] = time.min;
+    BKPbuf[2] = time.days;
 
-//    u16  BKPbuf[3];
-
-//    BKPbuf[0] = time.hour;
-//    BKPbuf[1] = time.min;
-//    BKPbuf[2] = time.days;
-
-//    BKP_WriteBackupRegister(BKPDataRR[num + APPCONFIGSIZE], BKPbuf[0]);
-//    BKP_WriteBackupRegister(BKPDataRR[num + 1 + APPCONFIGSIZE], BKPbuf[1]);
-//    BKP_WriteBackupRegister(BKPDataRR[num + 2 + APPCONFIGSIZE], BKPbuf[2]);
-
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[num + APPCONFIGSIZE], BKPbuf[0]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[num + 1 + APPCONFIGSIZE], BKPbuf[1]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[num + 2 + APPCONFIGSIZE], BKPbuf[2]);
 }
 
 
 static alarm_s getAlarmfromBKP (byte num)
 {
 
-//    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE); //使能PWR和BKP外设时钟
-//    RTC_WaitForLastTask(); //等待最近一次对RTC寄存器的写操作完成
-//    PWR_BackupAccessCmd(ENABLE); //使能后备寄存器访问
+    alarm_s time;
+    num = 3 * num; //两个16位 存放一个alarm_t
 
-//    alarm_s time;
-//    num = 3 * num; //两个16位 存放一个alarm_t
-
-//    u16  BKPbuf[3];
+    u16  BKPbuf[3];
 
 
+    BKPbuf[0] = HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[num + APPCONFIGSIZE]);
+    BKPbuf[1] = HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[num + 1 + APPCONFIGSIZE]);
+    BKPbuf[2] = HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[num + 2 + APPCONFIGSIZE]);
+    time.hour = BKPbuf[0];
+    time.min = BKPbuf[1];
+    time.days = BKPbuf[2];
 
-//    BKPbuf[0] = BKP_ReadBackupRegister(BKPDataRR[num + APPCONFIGSIZE]);
-
-//    BKPbuf[1] = BKP_ReadBackupRegister(BKPDataRR[num + 1 + APPCONFIGSIZE]);
-//    BKPbuf[2] = BKP_ReadBackupRegister(BKPDataRR[num + 2 + APPCONFIGSIZE]);
-
-
-//    time.hour = BKPbuf[0];
-//    time.min = BKPbuf[1];
-//    time.days = BKPbuf[2];
-
-//    return time;
+    return time;
 }
 
 
@@ -139,9 +117,9 @@ void alarm_update()
             if(wasGoingOff != alarmSetOff)
             {
                 oldDrawFunc = display_setDrawFunc(draw);
-                oldBtn1Func = buttons_setFunc(BTN_1, NULL);
-                oldBtn2Func = buttons_setFunc(BTN_2, stopAlarm);
-                oldBtn3Func = buttons_setFunc(BTN_3, NULL);
+//                oldBtn1Func = buttons_setFunc(BTN_1, NULL);
+//                oldBtn2Func = buttons_setFunc(BTN_2, stopAlarm);
+//                oldBtn3Func = buttons_setFunc(BTN_3, NULL);
                 tune_play(tuneAlarm, VOL_ALARM, PRIO_ALARM);
             }
 
@@ -168,17 +146,17 @@ static bool goingOff()
 
     // Make sure we're in 24 hour mode
     time_s time;
-    time.hour = timeDate.time.hour;
-    time.ampm = timeDate.time.ampm;
-    time_timeMode(&time, TIMEMODE_24HR);
+//    time.hour = timeDate.time.hour;
+//    time.ampm = timeDate.time.ampm;
+//    time_timeMode(&time, TIMEMODE_24HR);
 
-    if(alarm_getNext(&nextAlarm) && alarm_dayEnabled(nextAlarm.days, timeDate.date.day) && nextAlarm.hour == time.hour && nextAlarm.min == timeDate.time.mins)
-    {
-        if(timeDate.time.secs == 0)
-            alarmSetOff = true;
+//    if(alarm_getNext(&nextAlarm) && alarm_dayEnabled(nextAlarm.days, timeDate.date.day) && nextAlarm.hour == time.hour && nextAlarm.min == timeDate.time.mins)
+//    {
+//        if(timeDate.time.secs == 0)
+//            alarmSetOff = true;
 
-        return true;
-    }
+//        return true;
+//    }
 
     return false;
 }
@@ -191,12 +169,13 @@ static void getNextAlarm()
 
     // Make sure time is in 24 hour mode
     time_s timeNow;
-    timeNow.hour = timeDate.time.hour;
-    timeNow.ampm = timeDate.time.ampm;
-    time_timeMode(&timeNow, TIMEMODE_24HR);
+//    timeNow.hour = timeDate.time.hour;
+//    timeNow.ampm = timeDate.time.ampm;
+//    time_timeMode(&timeNow, TIMEMODE_24HR);
 
     // Now in minutes from start of week
-    uint now = toMinutes(timeNow.hour, timeDate.time.mins + 1, timeDate.date.day);
+    uint now = 3234;
+    //uint now = toMinutes(timeNow.hour, timeDate.time.mins + 1, timeDate.date.day);
 
     // Loop through alarms
     LOOPR(ALARM_COUNT, i)
@@ -253,7 +232,7 @@ static bool stopAlarm()
 {
     getNextAlarm();
     display_setDrawFunc(oldDrawFunc);
-    buttons_setFuncs(oldBtn1Func, oldBtn2Func, oldBtn3Func);
+//    buttons_setFuncs(oldBtn1Func, oldBtn2Func, oldBtn3Func);
     OLED_ColorTurn(appConfig.invert);
     tune_stop(PRIO_ALARM);
     alarmSetOff = false;

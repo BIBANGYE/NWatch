@@ -28,7 +28,7 @@ void draw_string(char* string, bool invert, byte x, byte y)
 	{
 		char c = *string - 0x20;
 		byte xx = x + (charCount*7);
-//		draw_bitmap(xx, y, smallFont[(byte)c], SMALLFONT_WIDTH, SMALLFONT_HEIGHT, invert, 0);
+		draw_bitmap(xx, y, smallFont[(byte)c], SMALLFONT_WIDTH, SMALLFONT_HEIGHT, invert, 0);
 		if(invert)
 		{
 			if(xx > 0)

@@ -3,7 +3,9 @@
 
 #include "include.h"
 
-
+#define PAGE_NUMS 256
+#define PAGE_SIZE 2048
+#define BASS_ADDRESS 0x08000000
 
 
 void flash_test(void);

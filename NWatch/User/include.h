@@ -8,7 +8,6 @@
 #include <math.h>
 
 #include "bsp.h"
-#include "memory_layout.h"
 
 #include "common.h"
 

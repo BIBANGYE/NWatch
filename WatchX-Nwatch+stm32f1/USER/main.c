@@ -64,15 +64,12 @@ void c_setup()
 
 //    buttons_init();
     millis_init(); // 定时器2初始化
-    time_init(); // 设置初始时间
+//    time_init(); // 设置初始时间
 //    rtc_init(); // 时钟/日历芯片初始化
 
-    draw_bitmap(10, FRAME_HEIGHT - 16, battIconHigh, 16, 8, NOINVERT, 0);
-    draw_end();
+    display_set(watchface_normal);
 
-//    display_set(watchface_normal);
-
-//    display_load();
+    display_load();
 
 
 
@@ -122,7 +119,7 @@ int main(void)
     while(1)
     {
 
-//        c_loop(); //循环
+        c_loop(); //循环
 
 //        if(KEY3 == 0 )        //主界面的按键四是重新复位
 //        {

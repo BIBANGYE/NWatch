@@ -6,95 +6,84 @@
 
 #define EEPROM_CHECK_NUM 0x1234
 
-#define BKPCheck_SAVE_ADDR   BKP_1_START_ADDR 	//设置BKP第一个地址保持第一次读写的标志位
+#define BKPCheck_SAVE_ADDR   RTC_BKP_DR1 	//设置BKP第一个地址保持第一次读写的标志位
 
 appconfig_s appConfig;     //appconfig_s的长度为8
 
 
 u16  BKPbuf[8];
 
-uint32_t BKPDataRR[] = {BKP_2_START_ADDR, BKP_3_START_ADDR, BKP_4_START_ADDR, BKP_5_START_ADDR,
-                        BKP_6_START_ADDR, BKP_7_START_ADDR, BKP_8_START_ADDR, BKP_9_START_ADDR
+uint32_t BKPDataRR[] = {RTC_BKP_DR2, RTC_BKP_DR3, RTC_BKP_DR4, RTC_BKP_DR5, RTC_BKP_DR6, RTC_BKP_DR7, RTC_BKP_DR8, RTC_BKP_DR9, RTC_BKP_DR10, RTC_BKP_DR11, RTC_BKP_DR12,
+                        RTC_BKP_DR13, RTC_BKP_DR14, RTC_BKP_DR15, RTC_BKP_DR16, RTC_BKP_DR17, RTC_BKP_DR18, RTC_BKP_DR19, RTC_BKP_DR20, RTC_BKP_DR21, RTC_BKP_DR22, RTC_BKP_DR23,
+                        RTC_BKP_DR24, RTC_BKP_DR25, RTC_BKP_DR26, RTC_BKP_DR27, RTC_BKP_DR28, RTC_BKP_DR29, RTC_BKP_DR30
                        };
-uint32_t BKPDataPAGE[] = {BKP_2_PAGE, BKP_3_PAGE, BKP_4_PAGE, BKP_5_PAGE,
-                          BKP_6_PAGE, BKP_7_PAGE, BKP_8_PAGE, BKP_9_PAGE
-                         };
 
 
 void appconfig_init()
 {
-    u16 BKPCheck  ;
+    uint16_t BKPCheck;
 
 
-    BKPCheck = *((__IO uint32_t *)BKPCheck_SAVE_ADDR);
+    BKPCheck = HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPCheck_SAVE_ADDR);
 
     appConfig = *(appconfig_s *) malloc(sizeof(appconfig_s));
     memset(&appConfig, 0x00, LENTH(appconfig_s));
 
-//    if(BKPCheck == EEPROM_CHECK_NUM)
-//    {
-//        int index = 0;
-//        appConfig.sleepTimeout = *((__IO uint32_t *)BKPDataRR[index]);
-//        index++;
-//        appConfig.invert       = *((__IO uint32_t *)BKPDataRR[index]);
-//        index++;
-//        #if COMPILE_ANIMATIONS
-//        appConfig.animations  =  *((__IO uint32_t *)BKPDataRR[index]);
-//        index++;
-//        #endif
-//        appConfig.display180  =  *((__IO uint32_t *)BKPDataRR[index]);
-//        index++;
-//        appConfig.CTRL_LEDs   =  *((__IO uint32_t *)BKPDataRR[index]);
-//        index++;
-//        appConfig.showFPS     =  *((__IO uint32_t *)BKPDataRR[index]);
-//        index++;
-//        appConfig.timeMode    = (timemode_t) * ((__IO uint32_t *)BKPDataRR[index]);
-//        index++;
-//        appConfig.volumes     =  *((__IO uint32_t *)BKPDataRR[index]);
-//        index++;
-//    }
-
-//    else
+    if(BKPCheck == EEPROM_CHECK_NUM)
     {
-//        BKPCheck = EEPROM_CHECK_NUM;
-//        _in_flash_erase(BKP_1_PAGE, 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPCheck_SAVE_ADDR, (uint16_t)BKPCheck);
-
-//        memset(&BKPbuf, 0x0000, LENTH(BKPbuf));
-
-//        int index = 0;
-//        _in_flash_erase(BKPDataPAGE[index], 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
-//        index++;
-//        _in_flash_erase(BKPDataPAGE[index], 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
-//        index++;
-//        #if COMPILE_ANIMATIONS
-//        _in_flash_erase(BKPDataPAGE[index], 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
-//        index++;
-//        #endif
-//        _in_flash_erase(BKPDataPAGE[index], 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
-//        index++;
-//        _in_flash_erase(BKPDataPAGE[index], 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
-//        index++;
-//        _in_flash_erase(BKPDataPAGE[index], 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
-//        index++;
-//        _in_flash_erase(BKPDataPAGE[index], 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
-//        index++;
-//        _in_flash_erase(BKPDataPAGE[index], 1);
-//        _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
-//        index++;
-
-//        appconfig_reset();
+        int index = 0;
+        appConfig.sleepTimeout = HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+        index++;
+        appConfig.invert       = HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+        index++;
+        #if COMPILE_ANIMATIONS
+        appConfig.animations  =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+        index++;
+        #endif
+        appConfig.display180  =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+        index++;
+        appConfig.CTRL_LEDs   =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+        index++;
+        appConfig.showFPS     =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+        index++;
+        appConfig.timeMode    = (timemode_t) HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+        index++;
+        appConfig.volumes     =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+        index++;
     }
 
-//    if(appConfig.sleepTimeout > 12)
-//        appConfig.sleepTimeout = 0;
+    else
+    {
+        BKPCheck = EEPROM_CHECK_NUM;
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPCheck_SAVE_ADDR, BKPCheck);
+
+        memset(&BKPbuf, 0x0000, LENTH(BKPbuf));
+
+        int index = 0;
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
+        index++;
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
+        index++;
+        #if COMPILE_ANIMATIONS
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
+        index++;
+        #endif
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
+        index++;
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
+        index++;
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
+        index++;
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
+        index++;
+        HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
+        index++;
+
+        appconfig_reset();
+    }
+
+    if(appConfig.sleepTimeout > 12)
+        appConfig.sleepTimeout = 0;
 }
 
 void appconfig_save()
@@ -113,31 +102,23 @@ void appconfig_save()
 
 
     int index = 0;
-    _in_flash_erase(BKPDataPAGE[index], 1);
-    _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
     index++;
-    _in_flash_erase(BKPDataPAGE[index], 1);
-    _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
     index++;
     #if COMPILE_ANIMATIONS
-    _in_flash_erase(BKPDataPAGE[index], 1);
-    _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
     index++;
     #endif
-    _in_flash_erase(BKPDataPAGE[index], 1);
-    _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
     index++;
-    _in_flash_erase(BKPDataPAGE[index], 1);
-    _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
     index++;
-    _in_flash_erase(BKPDataPAGE[index], 1);
-    _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
     index++;
-    _in_flash_erase(BKPDataPAGE[index], 1);
-    _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
     index++;
-    _in_flash_erase(BKPDataPAGE[index], 1);
-    _in_flash_program(FLASH_TYPEPROGRAM_WORD, BKPDataRR[index], (uint16_t)BKPbuf[index]);
+    HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPDataRR[index], BKPbuf[index]);
     index++;
 }
 
@@ -156,5 +137,5 @@ void appconfig_reset()
 
     appconfig_save();
 
-//    alarm_reset();
+    alarm_reset();
 }

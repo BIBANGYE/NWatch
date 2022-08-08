@@ -17,7 +17,6 @@
 #include <string.h>
 #include <limits.h>
 
-#include "memory_layout.h"
 
 #include "config.h"
 #include "util.h"
@@ -30,8 +29,10 @@
 //#include "spi.h"
 //#include "i2c.h"
 #include "m_rtc.h"
+#include "rtc.h"
 //#include "adc.h"
 //#include "oled.h"
+#include "bsp_lcd.h"
 #include "buttons.h"
 #include "battery.h"
 //#include "buzzer.h"

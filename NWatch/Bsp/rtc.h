@@ -3,9 +3,9 @@
 #include "sys.h" 
 #include "typedefs.h"
 
-timeDate_s get_rtc(void);
+extern RTC_HandleTypeDef Rtc_Handle;
+void rtc_init(void);
 
-void save_rtc(timeDate_s newtime);
 
 #endif   //__RTC_H
 

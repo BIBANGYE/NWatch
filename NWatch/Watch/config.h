@@ -54,7 +54,7 @@
 
 
 
- #define RTC_SRC   ///在无外部时钟时间 请注销这里          这里有BUG ，需要配合修改millis.c里面的z中断计时软件
+//#define RTC_SRC   ///在无外部时钟时间 请注销这里          这里有BUG ，需要配合修改millis.c里面的z中断计时软件
 
 
 #endif /* CONFIG_H_ */
