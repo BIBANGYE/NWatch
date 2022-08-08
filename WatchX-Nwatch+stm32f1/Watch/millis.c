@@ -60,8 +60,6 @@ void millis_init()
      TIM_ClearFlag(TIM2,TIM_FLAG_Update);//清除溢出中断标志
      TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);
      TIM_Cmd(TIM2,ENABLE);//开启时钟
-     
-	
 }
 
 // Get current milliseconds
@@ -89,7 +87,6 @@ millis_t millis_get()
 				#ifndef RTC_SRC
 				++timeDate.time.secs;   //每秒钟标志位+1;
 				#endif
-//				 LED1=!LED1;	
 			}
 		
 			

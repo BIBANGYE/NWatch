@@ -2,14 +2,13 @@
 
 void bsp_init(void)
 {
-    HAL_Init();
-    SystemClock_Config(); /* 配置系统时钟为72MHz */
-    oled_init();
-    
-    DEBUG_USART_Config();
-    led_init();
-    time_init();
-    
+//    HAL_Init();
+//    SystemClock_Config(); /* 配置系统时钟为72MHz */
+//    oled_init();
+//    
+//    DEBUG_USART_Config();
+//    led_init();
+//    time_init();  
 }
 
 /**

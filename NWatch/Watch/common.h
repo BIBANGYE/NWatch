@@ -17,10 +17,14 @@
 #include <string.h>
 #include <limits.h>
 
+#include "memory_layout.h"
+
 #include "config.h"
 #include "util.h"
 #include "typedefs.h"
 #include "debug.h"
+
+#include "include.h"
 
 //#include "wdt.h"
 //#include "spi.h"
@@ -31,7 +35,7 @@
 #include "buttons.h"
 #include "battery.h"
 //#include "buzzer.h"
-//#include "led.h"
+#include "led.h"
 //#include "ds3231.h"
 #include "millis.h"
 #include "functions.h"

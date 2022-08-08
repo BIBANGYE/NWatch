@@ -8,10 +8,10 @@
 
 #include "common.h"
 #include "led.h"
-#include "oled.h"
+#include "bsp_lcd.h"
 
 inline static void setBuffByte(byte*, byte, byte, byte);//, byte);
-inline uint8_t pgm_read_byte (const uint8_t *abc) {return *abc;}
+uint8_t pgm_read_byte (const uint8_t *abc) {return *abc;}
 
 void draw_string_P(const char* string, bool invert, byte x, byte y)
 {
@@ -28,7 +28,7 @@ void draw_string(char* string, bool invert, byte x, byte y)
 	{
 		char c = *string - 0x20;
 		byte xx = x + (charCount*7);
-		draw_bitmap(xx, y, smallFont[(byte)c], SMALLFONT_WIDTH, SMALLFONT_HEIGHT, invert, 0);
+//		draw_bitmap(xx, y, smallFont[(byte)c], SMALLFONT_WIDTH, SMALLFONT_HEIGHT, invert, 0);
 		if(invert)
 		{
 			if(xx > 0)

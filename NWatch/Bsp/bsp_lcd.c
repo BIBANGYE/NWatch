@@ -23,7 +23,6 @@
 
 uint8_t OLED_GRAM[1024];
 
-#define FRAME_BUFFER_SIZE 1024
 uint8_t oledBuffer[FRAME_BUFFER_SIZE];	     //Ä£ÄâoledµÄ»º³åÇø
 
 static void oled_GPIO_init(void);
@@ -280,7 +279,7 @@ void oled_init(void)
     LCD_SCL_SET();
 
     LCD_RST_CLR();
-    oled_delay_ms(200);
+    oled_delay_ms(50);
     LCD_RST_SET();
 
     OLED_WR_Byte(0xae, OLED_CMD);

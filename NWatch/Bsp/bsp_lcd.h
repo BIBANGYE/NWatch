@@ -63,6 +63,7 @@ extern uint8_t OLED_GRAM[1024];
 void oled_init(void);
 void oled_delay_ms(uint32_t ms);
 void OLED_WR_Byte(uint8_t byte,uint8_t cmd);
+void OLED_ColorTurn(uint8_t color_format);
 void OLED_DisplayTurn(uint8_t i);
 void oled_color_filp(uint8_t color_format);
 void oled_display_direction(uint8_t direction);

@@ -112,8 +112,6 @@ void display_update()
 	// End drawing, send to OLED
 	draw_end();
 
-//	debugPin_draw(LOW);
-
 	// Decide framerate
 	if(busy == DISPLAY_DONE)
 	{
@@ -124,10 +122,7 @@ void display_update()
 	{
 	//	pwrmgr_setState(PWR_ACTIVE_DISPLAY, PWR_STATE_IDLE);
     fpsMs = FRAME_RATE_MS;
-//#if COMPILE_GAME1
-//    if (drawFunc == game1_draw)
-//      fpsMs <<= 1;
-//#endif
+
 	}
 }
 

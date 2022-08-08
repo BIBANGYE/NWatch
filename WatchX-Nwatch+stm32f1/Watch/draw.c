@@ -160,12 +160,9 @@ void draw_clearArea(byte x, byte y, byte w)
 {
 	uint pos = x + (y / 8) * FRAME_WIDTH;
 	memset(&oledBuffer[pos], 0x00, w);
-
-
 }
 
 void draw_end()
 {
 	 oled_flush(); //刷新屏幕的意思
-
 }

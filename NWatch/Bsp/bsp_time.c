@@ -1,5 +1,8 @@
 #include "bsp_time.h"
 
+millis_t milliseconds;
+
+
 TIM_HandleTypeDef htim6;
 
 void time_init(void)
@@ -20,6 +23,7 @@ void time_init(void)
 
 void TIM6_IRQHandler(void)
 {
+    //每毫秒进一次中断
     HAL_TIM_IRQHandler(&htim6);
 }
 
@@ -27,7 +31,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if(htim->Instance == TIM6)
     {
-        printf("1\r\n");
+        
     }
 }
 

@@ -55,7 +55,7 @@ void c_setup()
     // Everything else
     memset(&oledBuffer, 0x00, FRAME_BUFFER_SIZE);
     OLED_Init();              //初始化oled 四线模拟spi模式
-//    led_init();               //初始化LED
+    led_init();               //初始化LED
 //    buzzer_init();
 //    global_init();
 //    battery_init();
@@ -63,22 +63,24 @@ void c_setup()
     alarm_init();             //依旧无法储存闹钟，每次重启以后需要自定义
 
 //    buttons_init();
-    millis_init();
-    time_init();
-    rtc_init();
+    millis_init(); // 定时器2初始化
+    time_init(); // 设置初始时间
+//    rtc_init(); // 时钟/日历芯片初始化
 
-    // Set watchface
-    display_set(watchface_normal);
+    draw_bitmap(10, FRAME_HEIGHT - 16, battIconHigh, 16, 8, NOINVERT, 0);
+    draw_end();
 
-    display_load();
-    
-    
+//    display_set(watchface_normal);
+
+//    display_load();
+
+
 
 //    WWDG_Init(0x7F, 0X5F, WWDG_Prescaler_8); 	//计数器值为7f,窗口寄存器为5f,分频数为8
 
     //初始化的时候，设置需要改变的状态
     OLED_ColorTurn(appConfig.invert );
-    
+
 }
 
 void c_loop()
@@ -96,13 +98,13 @@ void c_loop()
 //    led_update();
 
 
-//    #if COMPILE_STOPWATCH
-//    stopwatch_update();
-//    #endif
+    #if COMPILE_STOPWATCH
+    stopwatch_update();
+    #endif
 
 //    if(pwrmgr_userActive())
     {
-//        alarm_update();
+        alarm_update();
         display_update();
     }
 
@@ -120,7 +122,7 @@ int main(void)
     while(1)
     {
 
-        c_loop(); //循环
+//        c_loop(); //循环
 
 //        if(KEY3 == 0 )        //主界面的按键四是重新复位
 //        {

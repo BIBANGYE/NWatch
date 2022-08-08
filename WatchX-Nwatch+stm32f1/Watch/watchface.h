@@ -15,4 +15,6 @@
 
 void watchfaceOpen(void);
 
+display_t draw(void);
+
 #endif /* WATCHFACE_H_ */

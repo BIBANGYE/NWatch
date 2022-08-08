@@ -11,7 +11,7 @@
 #include "typedefs.h"
 
 
-#define ALARM_COUNT 6   //设置6个闹钟
+#define ALARM_COUNT 6  //设置6个闹钟
 
 #define _BV(bit) (1 << (bit))
 #define alarm_dayEnabled(days, day) (days & _BV(day))
