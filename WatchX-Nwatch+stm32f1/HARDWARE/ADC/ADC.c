@@ -4,7 +4,7 @@
  #include "delay.h"
 #include "common.h"
 	
- u8 UDADDR;  //用作判断usb连接
+u8 UDADDR;  //用作判断usb连接
 	
 void  Adc_Init(void)		   //PA0
 { 	

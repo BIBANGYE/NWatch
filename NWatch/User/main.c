@@ -28,20 +28,23 @@ static void c_setup(void)
     DEBUG_USART_Config();		//初始化串口波特率为115200
     #endif
 
+//    global_init();
+    
     memset(&oledBuffer, 0x00, FRAME_BUFFER_SIZE);
     oled_init();
     led_init();
     rtc_init();
     appconfig_init();
-    alarm_init();
+//    alarm_init();
+
 
     millis_init(); // 定时器
-//    time_init();
+    time_init(); // 设置初始化时钟时间
 
     display_set(watchface_normal);
     display_load();
 
-    OLED_ColorTurn(appConfig.invert);
+    OLED_ColorTurn(appConfig.invert); // 反显
 }
 
 //static stopwatch_state_t state;
@@ -63,11 +66,12 @@ void stopwatch_update(void)
 
 static void c_loop(void)
 {
-//    time_update();
 
-//    #if COMPILE_STOPWATCH
-//    stopwatch_update();
-//    #endif
+    time_update();
+
+    #if COMPILE_STOPWATCH
+    stopwatch_update();
+    #endif
 
     //    if(pwrmgr_userActive())
     {

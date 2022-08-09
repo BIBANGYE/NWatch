@@ -87,7 +87,7 @@ void c_loop()
 //    if(pwrmgr_userActive())
 //    {
 //        battery_update();
-//        buttons_update();
+        buttons_update();
 //    }
 
 //    buzzer_update();

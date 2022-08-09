@@ -10,36 +10,7 @@
 #define GLOBAL_H_
 #include "common.h"
 
-//#ifdef __AVR_ATmega32U4__
 
-//#define RTC_INT_P   D3 // 
-//#define USB_SENSE_P C6 // TODO
-//#define CHRG_P      C6 // Charg State
-
-//#define RTC_HALFSEC()  (!pinRead(RTC_INT_P))
-//#define USB_CONNECTED() (USBSTA & (1 << VBUS))
-//#define CHARGING()    (!pinRead(CHRG_P))
-
-//#else
-
-//#define RTC_INT_P	D2
-
-//#if HW_VERSION == 1
-//#define USB_SENSE_P	B6
-//#define CHRG_P		B7
-//#elif HW_VERSION == 2
-//#define USB_SENSE_P	B7
-//#define CHRG_P		B6
-//#else
-//#define USB_SENSE_P	D3
-//#define CHRG_P		D4
-//#endif
-
-//#define RTC_HALFSEC()  (!pinRead(RTC_INT_P))
-//#define USB_CONNECTED() (pinRead(USB_SENSE_P))
-//#define CHARGING()    (!pinRead(CHRG_P))
-
-//#endif
 
 void global_init(void);
 void global_update(void);

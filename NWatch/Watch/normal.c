@@ -72,17 +72,14 @@ static display_t draw()
 
     busy = ticker();
 
-    // Draw battery icon
-    drawBattery();
+    drawBattery(); // Draw battery icon
 
     byte x = 20;
 
     #if COMPILE_ANIMATIONS
-//	if(animateIcon(UDADDR != 0, &usbImagePos))
-//		if(animateIcon(1, &usbImagePos))
-
+    if(animateIcon(UDADDR != 0, &usbImagePos))
     {
-        draw_bitmap(x, usbImagePos, usbIcon, 16, 8, NOINVERT, 0);
+        draw_bitmap(0, 0, usbIcon, 16, 8, NOINVERT, 0);
         x += 20;
     }
     #else
@@ -97,13 +94,11 @@ static display_t draw()
 
     // Draw charging icon
     #if COMPILE_ANIMATIONS
-
-//    if(animateIcon(CHARGING(), &chargeImagePos))
+    if(animateIcon(1, &chargeImagePos))
     {
-        draw_bitmap(x, chargeImagePos, chargeIcon, 8, 8, NOINVERT, 0);
+        draw_bitmap(20, 0, chargeIcon, 8, 8, NOINVERT, 0);
         x += 12;
     }
-
     #else
 
     if(CHARGING())
@@ -115,14 +110,11 @@ static display_t draw()
     #endif
 
     #if COMPILE_STOPWATCH
-
-    // Stopwatch icon
-//    if(stopwatch_active())
+//    if(stopwatch_active())     // √Î±Ì
     {
-        draw_bitmap(x, FRAME_HEIGHT - 8, stopwatch, 8, 8, NOINVERT, 0);
+        draw_bitmap(40, 0, stopwatch, 8, 8, NOINVERT, 0);
         x += 12;
     }
-
     #endif
     return busy;
 }
@@ -131,18 +123,17 @@ static void drawDate()
 {
     // Get day string
     char day[BUFFSIZE_STR_DAYS];
-//    strcpy(day, days[timeDate.date.day]);
-    strcpy(day, days[2]);
+    strcpy(day, days[timeDate.date.day]);
 
     // Get month string
     char month[BUFFSIZE_STR_MONTHS];
-//    strcpy(month, months[timeDate.date.month]);
-    strcpy(month, months[2]);
+    strcpy(month, months[timeDate.date.month]);
+
 
     // Draw date
     char buff[BUFFSIZE_DATE_FORMAT];
-//    sprintf_P(buff, PSTR(DATE_FORMAT), day, timeDate.date.date, month, timeDate.date.year);
-    draw_string(buff, false, 12, 0);
+    sprintf_P(buff, PSTR(DATE_FORMAT), day, timeDate.date.date, month, timeDate.date.year);
+    draw_string(buff, false, 60, 0);
 }
 
 #if COMPILE_ANIMATIONS
@@ -160,7 +151,6 @@ static bool animateIcon(bool active, byte* pos)
         *pos = y;
         return true;
     }
-
     return false;
 }
 #endif

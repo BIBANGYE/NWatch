@@ -44,8 +44,7 @@ typedef enum
 {
     DISPLAY_DONE,
     DISPLAY_BUSY,
-//	DISPLAY_TOOFAST
-} display_t;
+} display_t; //	DISPLAY_TOOFAST
 
 typedef enum
 {

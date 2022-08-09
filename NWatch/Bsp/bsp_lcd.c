@@ -399,7 +399,7 @@ void oled_flush(void)
         OLED_WR_Byte(0x10, OLED_CMD);  //设置高列起始地址
 
         for(n = 0; n < 128; n++)
-            OLED_WR_Byte(oledBuffer[128 * i + n], OLED_DATA);
+            OLED_WR_Byte(oledBuffer[128 * i + n], OLED_DATA); // 按行写入
     }
 
     memset(&oledBuffer, 0x00, FRAME_BUFFER_SIZE);

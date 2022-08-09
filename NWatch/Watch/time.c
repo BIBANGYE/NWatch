@@ -38,21 +38,7 @@ void time_shutdown()
 
 rtcwake_t time_wake()
 {
-////#if RTC_SRC != RTC_SRC_INTERNAL
-//    getRtcTime();
-
-//    // Check alarms
-//    bool userAlarm = rtc_userAlarmState();
-//    bool systemAlarm = rtc_systemAlarmState();
-
-//    if(userAlarm && systemAlarm)
-//        return RTCWAKE_USER_SYSTEM;
-//    else if(userAlarm)
-//        return RTCWAKE_USER;
-//    else if(systemAlarm)
-//        return RTCWAKE_SYSTEM;
-
-//    return RTCWAKE_NONE;
+    getRtcTime();
 }
 
 void time_set(timeDate_s* newTimeDate)
@@ -121,7 +107,7 @@ void time_timeMode(time_s* time, timemode_t mode)
     {
         if(time->ampm != CHAR_24) // Already 12hr
             return;
-        else if(hour >= 12)
+        else if(hour >= 12) // PM
         {
             if(hour > 12)
                 hour -= 12;
@@ -214,17 +200,15 @@ static void getRtcTime()
     #else
 
     timeDate.date.year = '0' - 28;
-    timeDate.date.month = (month_t)1;
-    timeDate.date.day = (day_t)5;
-    timeDate.date.date = 7;
-    timeDate.time.hour = milliseconds / 3600;
-    timeDate.time.mins = (milliseconds % 3600) / 60;
+    timeDate.date.month = (month_t)0;
+    timeDate.date.day = (day_t)6;
+    timeDate.date.date = 8;
+//    timeDate.time.hour = milliseconds / 3600;
+//    timeDate.time.mins = (milliseconds % 3600) / 60;
+    timeDate.time.hour = 23;
+    timeDate.time.mins = 59;
     timeDate.time.secs = milliseconds % 3600 % 60;
-
     #endif
-
-
-
 
     timeDate.time.ampm = CHAR_24;
 

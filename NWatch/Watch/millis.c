@@ -39,7 +39,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if(htim->Instance == TIM6)
     {
         ++milliseconds;
-//        update = true;
+        update = true;
 
         if(milliseconds % 1000 == 0)
         {

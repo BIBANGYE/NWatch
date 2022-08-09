@@ -3,8 +3,8 @@
 
 void drawBattery()
 {
-//	uint battLevel =    battery_voltage(); 
-    uint battLevel = 2300;
+//	uint battLevel =    battery_voltage(); // 获取电池电量
+    uint battLevel = 3250;
 	const byte* battIcon;
 	if(battLevel < 3100)
 		battIcon = battIconEmpty;

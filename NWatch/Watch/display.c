@@ -65,21 +65,20 @@ draw_f display_setDrawFunc(draw_f func)
 
 void display_update()
 {
-    static millis8_t lastDraw; // Time of last draw
-    static byte fpsMs; // Milliseconds to next draw
+    static millis8_t lastDraw = 0; // Time of last draw
+    static byte fpsMs = 0; // Milliseconds to next draw
+
 
     // Limit frame rate
     millis8_t now = millis();
 
+
     if((millis8_t)(now - lastDraw) < fpsMs)
     {
-        //pwrmgr_setState(PWR_ACTIVE_DISPLAY, PWR_STATE_IDLE);
         return;
     }
 
     lastDraw = now;
-
-    //debugPin_draw(HIGH);
 
     display_t busy = DISPLAY_DONE;
 
@@ -108,35 +107,29 @@ void display_update()
 
     if(appConfig.showFPS)
     {
+        // Î´²âÊÔ
         // Work out & draw FPS, add 2ms (actually 2.31ms) for time it takes to send to OLED, clear buffer etc
         // This is only approximate
-        millis8_t end = millis() + ((byte)(16000000UL / F_CPU)) + 1;
+        millis8_t end = millis() + 1;
         char buff[5];
         sprintf_P(buff, PSTR("%u"), (uint)(1000 / (millis8_t)(end - now)));
         //	draw_string(buff,false,107,56);
         draw_string(buff, false, 100, 56);
-
     }
 
-    // End drawing, send to OLED
-    draw_end();
 
-//	debugPin_draw(LOW);
+    draw_end(); // End drawing, send to OLED
+
 
     // Decide framerate
     if(busy == DISPLAY_DONE)
     {
-        //	pwrmgr_setState(PWR_ACTIVE_DISPLAY, PWR_STATE_NONE);
+
         fpsMs = FRAME_RATE_LOW_MS;
     }
     else
     {
-        //	pwrmgr_setState(PWR_ACTIVE_DISPLAY, PWR_STATE_IDLE);
         fpsMs = FRAME_RATE_MS;
-//#if COMPILE_GAME1
-//    if (drawFunc == game1_draw)
-//      fpsMs <<= 1;
-//#endif
     }
 }
 

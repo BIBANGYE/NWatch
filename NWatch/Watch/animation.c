@@ -71,20 +71,18 @@ void animation_update()
 
 void animation_start(void (*animOnComplete)(void), bool goingOffScreen)
 {
-	
-//	if(appConfig.animations)      //这里不禁止会出现菜单返回失败，左右按键失效
+	if(appConfig.animations)      //这里不禁止会出现菜单返回失败，左右按键失效
 	{
 		animationStatus.active = true;
 		animationStatus.offsetY = goingOffScreen ? 0 : 192;
 		animationStatus.animOnComplete = animOnComplete;
 		animationStatus.goingOffScreen = goingOffScreen;
 	}
-//	else
+	else
 	{
 		if(animOnComplete != NULL)
 			animOnComplete();
 	}	
-		
 }
 
 bool animation_active()
