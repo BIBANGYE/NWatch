@@ -14,7 +14,7 @@
 // String buffer sizes
 // Don't forget to add 1 for null terminator
 #define BUFFSIZE_STR_MENU	24
-#define BUFFSIZE_STR_DAYS	4
+#define BUFFSIZE_STR_DAYS	4 //  ÐÇÆÚ×Ö·û³¤¶È
 #define BUFFSIZE_STR_MONTHS	4
 
 #define BUFFSIZE_DATE_FORMAT		((BUFFSIZE_STR_DAYS - 1) + (BUFFSIZE_STR_MONTHS - 1) + 12)

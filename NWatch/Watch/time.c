@@ -188,8 +188,6 @@ void time_update()
     }
 
     #endif
-
-    debug_printf("%02hhu:%02hhu:%02hhu\n", timeDate.time.hour, timeDate.time.mins, timeDate.time.secs);
 }
 
 static void getRtcTime()

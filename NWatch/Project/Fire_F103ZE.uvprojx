@@ -633,6 +633,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\stm32f1xx_it.c</FilePath>
             </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\test.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1577,6 +1582,11 @@
               <FileName>stm32f1xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\stm32f1xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\test.c</FilePath>
             </File>
           </Files>
         </Group>

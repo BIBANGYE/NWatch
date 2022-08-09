@@ -32,7 +32,7 @@ void watchface_normal()
 {
     display_setDrawFunc(draw);
 //    buttons_setFuncs(up, menu_select, down);
-    animation_start(NULL, ANIM_MOVE_ON);
+//    animation_start(NULL, ANIM_MOVE_ON);
 }
 
 static bool down()
@@ -54,9 +54,6 @@ static bool up()
 }
 
 
-
-
-
 static display_t draw()
 {
     #if COMPILE_ANIMATIONS
@@ -64,11 +61,10 @@ static display_t draw()
     static byte chargeImagePos = FRAME_HEIGHT;
     #endif
 
-    // Draw date
-    drawDate();
 
-    // Draw time animated
-    display_t busy ;
+    drawDate(); // 日期
+
+    display_t busy ; // Draw time animated
 
     busy = ticker();
 
@@ -77,11 +73,13 @@ static display_t draw()
     byte x = 20;
 
     #if COMPILE_ANIMATIONS
+
     if(animateIcon(UDADDR != 0, &usbImagePos))
     {
         draw_bitmap(0, 0, usbIcon, 16, 8, NOINVERT, 0);
         x += 20;
     }
+
     #else
 
     if(UDADDR != 0)
@@ -94,11 +92,13 @@ static display_t draw()
 
     // Draw charging icon
     #if COMPILE_ANIMATIONS
+
     if(animateIcon(1, &chargeImagePos))
     {
         draw_bitmap(20, 0, chargeIcon, 8, 8, NOINVERT, 0);
         x += 12;
     }
+
     #else
 
     if(CHARGING())
@@ -123,17 +123,21 @@ static void drawDate()
 {
     // Get day string
     char day[BUFFSIZE_STR_DAYS];
-    strcpy(day, days[timeDate.date.day]);
+    strcpy(day, days[timeDate.date.day]); // 星期
 
     // Get month string
     char month[BUFFSIZE_STR_MONTHS];
-    strcpy(month, months[timeDate.date.month]);
+    strcpy(month, months[timeDate.date.month]); // 月份
 
 
     // Draw date
     char buff[BUFFSIZE_DATE_FORMAT];
+    //                                 星期    日期    月份  年份
+
+    timeDate.date.date = 3;
+//    timeDate.date.year = 22;
     sprintf_P(buff, PSTR(DATE_FORMAT), day, timeDate.date.date, month, timeDate.date.year);
-    draw_string(buff, false, 60, 0);
+    draw_string(buff, false, 20, 0);
 }
 
 #if COMPILE_ANIMATIONS
@@ -151,6 +155,7 @@ static bool animateIcon(bool active, byte* pos)
         *pos = y;
         return true;
     }
+
     return false;
 }
 #endif
@@ -175,6 +180,7 @@ static display_t ticker()
             yPos_secs = 0;
             moving = true;
 
+            // 时间变化移动标志
             moving2[0] = div10(timeDate.time.hour) != div10(hour2);
             moving2[1] = mod10(timeDate.time.hour) != mod10(hour2);
             moving2[2] = div10(timeDate.time.mins) != div10(mins);
@@ -186,6 +192,7 @@ static display_t ticker()
             secs = timeDate.time.secs;
         }
 
+        //时钟显示动画
         if(moving)
         {
             if(yPos <= 3)
@@ -284,12 +291,16 @@ static display_t ticker()
     drawTickerNum(&data);
 
     // Draw colon for half a second   画半秒的冒号
-    if(milliseconds % 3600 > 1800) // 假装是半秒钟  30ms
+    if((milliseconds % 1000)  > 500 ) // 假装是半秒钟  500ms
+    {
         draw_bitmap(TIME_POS_X + 46 + 2, TIME_POS_Y, colon, FONT_COLON_WIDTH, FONT_COLON_HEIGHT, NOINVERT, 0);
+    }
+
 
     // Draw AM/PM character
     char tmp[2];
-    tmp[0] = timeDate.time.ampm;
+//    tmp[0] = timeDate.time.ampm;
+    tmp[0] = CHAR_PM ;
     tmp[1] = 0x00;
     draw_string(tmp, false, 104, 20);
 

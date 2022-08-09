@@ -11,10 +11,12 @@
 #include "bsp_lcd.h"
 
 inline static void setBuffByte(byte*, byte, byte, byte);//, byte);
+
 uint8_t pgm_read_byte (const uint8_t *abc)
 {
     return *abc;
 }
+
 
 void draw_string_P(const char* string, bool invert, byte x, byte y)
 {
@@ -24,6 +26,8 @@ void draw_string_P(const char* string, bool invert, byte x, byte y)
     draw_string(buff, invert, x, y);
 }
 
+// invert:反显
+// x ,y 坐标
 void draw_string(char* string, bool invert, byte x, byte y)
 {
     byte charCount = 0;
@@ -32,6 +36,7 @@ void draw_string(char* string, bool invert, byte x, byte y)
     {
         char c = *string - 0x20;
         byte xx = x + (charCount * 7);
+        // xx 下一个字符的坐标
         draw_bitmap(xx, y, smallFont[(byte)c], SMALLFONT_WIDTH, SMALLFONT_HEIGHT, invert, 0);
 
         if(invert)
@@ -48,12 +53,13 @@ void draw_string(char* string, bool invert, byte x, byte y)
     }
 }
 
-inline static void setBuffByte(byte* buff, byte x, byte y, byte val)//, byte colour)
+inline static void setBuffByte(byte* buff, byte x, byte y, byte val)//, byte colour
 {
     uint pos = x + (y / 8) * FRAME_WIDTH;
     buff[pos] |= val;
 }
 
+// 读一个字节数据
 inline static byte readPixels(const byte* loc, bool invert)
 {
     byte pixels = pgm_read_byte(loc);  //d读取flash里面的数据到ram
@@ -171,12 +177,9 @@ void draw_clearArea(byte x, byte y, byte w)
 {
     uint pos = x + (y / 8) * FRAME_WIDTH;
     memset(&oledBuffer[pos], 0x00, w);
-
-
 }
 
 void draw_end(void)
 {
     oled_flush(); //刷新屏幕的意思
-
 }

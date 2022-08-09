@@ -89,10 +89,10 @@ typedef struct
 
 typedef struct
 {
-    day_t day;
-    byte date;
-    month_t month;
-    byte year;
+    day_t day; //星期
+    byte date; // 日期
+    month_t month; //月份
+    byte year; //年份
 } date_s;
 
 typedef struct
@@ -207,7 +207,6 @@ typedef struct
     const byte* bitmap;
     byte width;
     byte height;
-//	byte foreColour;
     bool invert;
     byte offsetY;
 } image_s;

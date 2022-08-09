@@ -1,11 +1,3 @@
-/*
- * Project: N|Watch
- * Author: Zak Kemble, contact@zakkemble.co.uk
- * Copyright: (C) 2013 by Zak Kemble
- * License: GNU GPL v3 (see License.txt)
- * Web: http://blog.zakkemble.co.uk/diy-digital-wristwatch/
- */
-
 #include "common.h"
 
 // Frame rate when stuff is happening
@@ -23,9 +15,6 @@
 static draw_f drawFunc;
 static display_f func;
 
-//#if COMPILE_GAME1
-//extern display_t game1_draw();
-//#endif
 
 #if COMPILE_ANIMATIONS
 typedef struct
@@ -122,15 +111,15 @@ void display_update()
 
 
     // Decide framerate
-    if(busy == DISPLAY_DONE)
-    {
+//    if(busy == DISPLAY_DONE)
+//    {
 
-        fpsMs = FRAME_RATE_LOW_MS;
-    }
-    else
-    {
-        fpsMs = FRAME_RATE_MS;
-    }
+//        fpsMs = FRAME_RATE_LOW_MS;
+//    }
+//    else
+//    {
+//        fpsMs = FRAME_RATE_MS;
+//    }
 }
 
 #if COMPILE_ANIMATIONS

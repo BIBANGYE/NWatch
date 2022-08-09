@@ -47,7 +47,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
             ++timeDate.time.secs;   //每秒钟标志位+1;
             #endif
         }
-
     }
 }
 
