@@ -37,12 +37,12 @@
 
 
 typedef struct {
-  millis_t pressedTime;	// Time of press
+  millis_t pressedTime;	    // Time of press
   bool processed;			// Time of press has been stored (don't store again until next press)
-  byte counter;			// Debounce counter
+  byte counter;			    // Debounce counter
   bool funcDone;			// Function has been ran (don't run again until next press)
-  button_f onPress;		// Function to run when pressed
-  const uint* tune;		// Tune to play when pressed
+  button_f onPress;		    // Function to run when pressed
+  const uint* tune;		    // Tune to play when pressed
 } s_button;
 
 static s_button buttons[BTN_COUNT];

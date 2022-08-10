@@ -20,10 +20,6 @@ static void setVolumeHour(void);
 static inline byte setVolume(byte);
 static void setMenuOptions(void);
 
-//	static int volUI=0; 
-//	static int volAlarm=0; 
-//	static int volHour=0; 
-
 
 
 void mSoundOpen()

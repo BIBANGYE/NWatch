@@ -31,8 +31,8 @@ static void drawTickerNum(tickerData_t*);
 void watchface_normal()
 {
     display_setDrawFunc(draw);
-//    buttons_setFuncs(up, menu_select, down);
-//    animation_start(NULL, ANIM_MOVE_ON);
+    buttons_setFuncs(up, menu_select, down);
+    animation_start(NULL, ANIM_MOVE_ON);
 }
 
 static bool down()
@@ -137,7 +137,7 @@ static void drawDate()
     timeDate.date.date = 3;
 //    timeDate.date.year = 22;
     sprintf_P(buff, PSTR(DATE_FORMAT), day, timeDate.date.date, month, timeDate.date.year);
-    draw_string(buff, false, 20, 0);
+    draw_string(buff, false, 30, 0);
 }
 
 #if COMPILE_ANIMATIONS

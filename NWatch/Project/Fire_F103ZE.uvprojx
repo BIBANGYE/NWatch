@@ -654,11 +654,6 @@
               <FilePath>..\Bsp\bsp.h</FilePath>
             </File>
             <File>
-              <FileName>bsp_debug_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\usart\bsp_debug_usart.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_lcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\bsp_lcd.c</FilePath>
@@ -669,6 +664,11 @@
               <FilePath>..\Bsp\delay.c</FilePath>
             </File>
             <File>
+              <FileName>bsp_debug_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\usart\bsp_debug_usart.c</FilePath>
+            </File>
+            <File>
               <FileName>bsp_internal_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\bsp_internal_flash.c</FilePath>
@@ -677,6 +677,16 @@
               <FileName>rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>OneButton.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\OneButton.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -831,7 +841,7 @@
                   <RVCTZI>0</RVCTZI>
                   <RVCTOtherData>0</RVCTOtherData>
                   <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
+                  <IncludeInBuild>1</IncludeInBuild>
                   <AlwaysBuild>2</AlwaysBuild>
                   <GenerateAssemblyFile>2</GenerateAssemblyFile>
                   <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -951,6 +961,51 @@
               <FileName>global.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Watch\global.c</FilePath>
+            </File>
+            <File>
+              <FileName>watchface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\watchface.c</FilePath>
+            </File>
+            <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>m_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\m_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\settings.c</FilePath>
+            </File>
+            <File>
+              <FileName>alarms.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\alarms.c</FilePath>
+            </File>
+            <File>
+              <FileName>timedate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\timedate.c</FilePath>
+            </File>
+            <File>
+              <FileName>sleep.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\sleep.c</FilePath>
+            </File>
+            <File>
+              <FileName>sound.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\sound.c</FilePath>
+            </File>
+            <File>
+              <FileName>m_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\m_display.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1604,11 +1659,6 @@
               <FilePath>..\Bsp\bsp.h</FilePath>
             </File>
             <File>
-              <FileName>bsp_debug_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\usart\bsp_debug_usart.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_lcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\bsp_lcd.c</FilePath>
@@ -1619,6 +1669,11 @@
               <FilePath>..\Bsp\delay.c</FilePath>
             </File>
             <File>
+              <FileName>bsp_debug_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\usart\bsp_debug_usart.c</FilePath>
+            </File>
+            <File>
               <FileName>bsp_internal_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\bsp_internal_flash.c</FilePath>
@@ -1627,6 +1682,16 @@
               <FileName>rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>OneButton.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\OneButton.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1697,6 +1762,51 @@
               <FileName>global.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Watch\global.c</FilePath>
+            </File>
+            <File>
+              <FileName>watchface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\watchface.c</FilePath>
+            </File>
+            <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>m_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\m_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\settings.c</FilePath>
+            </File>
+            <File>
+              <FileName>alarms.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\alarms.c</FilePath>
+            </File>
+            <File>
+              <FileName>timedate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\timedate.c</FilePath>
+            </File>
+            <File>
+              <FileName>sleep.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\sleep.c</FilePath>
+            </File>
+            <File>
+              <FileName>sound.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\sound.c</FilePath>
+            </File>
+            <File>
+              <FileName>m_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\m_display.c</FilePath>
             </File>
           </Files>
         </Group>

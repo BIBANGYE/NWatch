@@ -83,7 +83,6 @@ static void itemLoader(byte num)
 #if COMPILE_GAME1 || COMPILE_GAME2 || COMPILE_GAME3
 	setMenuOption_P(num++, PSTR(STR_GAMES), menu_games, mGamesOpen);
 #endif
-	//setMenuOption_P(num++, PSTR(STR_CALCULATORS), menu_calc, calcOpen);
 	setMenuOption_P(num++, PSTR(STR_SETTINGS), menu_settings, mSettingsOpen);
 	setMenuOption_P(OPTION_COUNT, PSTR(STR_EXIT), menu_exit, menu_close);
 }

@@ -33,7 +33,7 @@ static void flash(led_s* led, byte len, byte pin)
 
 void led_flash(led_t led, byte len, byte brightness)
 {
-    if (appConfig.CTRL_LEDs)        //读出来是0 但是还是有问题估计与聚合体有关
+//    if (appConfig.CTRL_LEDs)        //读出来是0 但是还是有问题估计与聚合体有关
     {
         switch (led)
         {

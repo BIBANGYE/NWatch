@@ -267,12 +267,10 @@ static void drawTickerNum(tickerData_t*);
 
 void watchfaceOpen()
 {
-
     appConfig.showFPS = 0;   //½ûÓÃFPS
     display_setDrawFunc(draw);
     buttons_setFuncs(up, menu_select, down);
     animation_start(NULL, ANIM_MOVE_ON);
-
 }
 
 static bool down()

@@ -2,6 +2,7 @@
 
 UART_HandleTypeDef UartHandle;
 
+
 /**
  * @brief  DEBUG_USART GPIO 配置,工作模式配置。115200 8-N-1
  * @param  无
@@ -63,7 +64,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 
 void  DEBUG_USART_IRQHandler(void)
 {
-    uint8_t ch = 0;
+    uint8_t ch;
 
     if(__HAL_UART_GET_FLAG( &UartHandle, UART_FLAG_RXNE ) != RESET)
     {

@@ -52,17 +52,9 @@ static void processButtons(void);
 static void processButton(s_button*, BOOL);
 static byte bitCount(byte);
 
-//EMPTY_INTERRUPT(PCINT0_vect);
-
 void buttons_init()
 {
     buttons_startup();
-
-    //蜂鸣器的播放曲调
-    // Assign tunes
-    buttons[BTN_1].tune = tuneBtn1;
-    buttons[BTN_2].tune = tuneBtn2;
-    buttons[BTN_3].tune = tuneBtn3;
 }
 
 void buttons_update()
@@ -97,10 +89,28 @@ static void processButtons()
 {
     // Get button pressed states
     BOOL isPressed[BTN_COUNT];
-    isPressed[BTN_1] = KEY1;
-    isPressed[BTN_2] = KEY2;
-    isPressed[BTN_3] = KEY0;
-    isPressed[BTN_4] = KEY3;
+
+    isPressed[BTN_1] = 1;
+    isPressed[BTN_2] = 1;
+    isPressed[BTN_3] = 1;
+    isPressed[BTN_4] = 1;
+    
+    uint8_t clik = get_number_clicks();
+    
+    if(clik == 1)
+        isPressed[BTN_1] = 0; // 上 单击
+    else if (clik == 2)
+        isPressed[BTN_2] = 0; // 下 双击
+    else if (clik == 3)
+        isPressed[BTN_3] = 0; // 确认 三连击
+//    else if (clik == 99)
+//        isPressed[BTN_4] = 0; // 复位 长按
+
+
+//    isPressed[BTN_1] = KEY1;
+//    isPressed[BTN_2] = KEY2;
+//    isPressed[BTN_3] = KEY0;
+//    isPressed[BTN_4] = KEY3;
 
     // Process each button
     LOOPR(BTN_COUNT, i)
@@ -131,7 +141,7 @@ static void processButton(s_button* button, BOOL isPressed)
             {
                 button->funcDone = true;
 
-                tune_play(button->tune, VOL_UI, PRIO_UI);
+//                tune_play(button->tune, VOL_UI, PRIO_UI);
 
                 led_flash(LED_GREEN, LED_FLASH_FAST, LED_BRIGHTNESS_MAX);
 

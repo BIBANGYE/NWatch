@@ -1,5 +1,5 @@
 #include "include.h"
-#include "common.h"
+
 static void c_setup(void);
 static void c_loop(void);
 
@@ -29,18 +29,18 @@ static void c_setup(void)
     #endif
 
 //    global_init();
-    
+
     memset(&oledBuffer, 0x00, FRAME_BUFFER_SIZE);
     oled_init();
     led_init();
     rtc_init(); // rtc 时钟初始化
-    appconfig_init(); // 保存配置数据 
+    appconfig_init(); // 保存配置数据
 //    alarm_init();
 
-
+    buttons_init();
     millis_init(); // 定时器初始化
     time_init();  // 设置时钟时间
-    
+
     OLED_Clear();
 
     display_set(watchface_normal);
@@ -49,37 +49,22 @@ static void c_setup(void)
     OLED_ColorTurn(appConfig.invert); // 反显
 }
 
-//static stopwatch_state_t state;
-static ulong timer;
-static millis_t lastMS;
 
-void stopwatch_update(void)
-{
-//	if(state == STATE_TIMING)
-    {
-        millis_t now = millis();
-        timer += now - lastMS;
-        lastMS = now;
-
-        if(timer > 359999999) // 99 hours, 59 mins, 59 secs, 999 ms
-            timer = 359999999;
-    }
-}
 
 static void c_loop(void)
 {
 
     time_update();
 
+    buttons_update();
+
     #if COMPILE_STOPWATCH
     stopwatch_update();
     #endif
 
-    //    if(pwrmgr_userActive())
-    {
-//        alarm_update();
-        display_update();
-    }
+
+    display_update();
+
 }
 
 
