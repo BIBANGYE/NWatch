@@ -41,19 +41,14 @@ static void c_setup(void)
     millis_init(); // 定时器初始化
     time_init();  // 设置时钟时间
 
-    OLED_Clear();
-
     display_set(watchface_normal);
     display_load();
-
-    OLED_ColorTurn(appConfig.invert); // 反显
 }
 
 
 
 static void c_loop(void)
 {
-
     time_update();
 
     buttons_update();
@@ -62,9 +57,7 @@ static void c_loop(void)
     stopwatch_update();
     #endif
 
-
     display_update();
-
 }
 
 

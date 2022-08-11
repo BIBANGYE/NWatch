@@ -37,7 +37,6 @@ void watchface_normal()
 
 static bool down()
 {
-    // Set watchface
     display_set(watchfaceOpen);
     display_load();
 

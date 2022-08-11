@@ -3,18 +3,13 @@
 
 #include "include.h"
 
+extern uint8_t button_click_state;
+
 #define BUTTON_PRESS 1 /* 按键按下 */
 #define BUTTON_FREE  0 /* 按键释放 */
 
 typedef void (*callbackFunction)(void);
 typedef void (*parameterizedCallbackFunction)(void *);
-
-typedef struct
-{
-    uint8_t fifo[32];
-    uint8_t read;
-    uint8_t write;
-} BUTTON_FIFO_T;
 
 typedef struct
 {

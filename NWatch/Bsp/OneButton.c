@@ -13,6 +13,8 @@ uint32_t millis(void)
 uint8_t _state = OCS_INIT;
 uint8_t _lastState = OCS_INIT;
 
+uint8_t button_click_state = 0;
+
 int _maxClicks = 3; // 支持的多连击次数
 unsigned int _debounceTicks = 50; // 消抖时间 ms
 unsigned int _clickTicks = 400;   // 400ms以上为单击
@@ -213,7 +215,7 @@ static void button_tick(uint8_t activeLevel)
 {
     uint32_t now = b_millis(); // current (relative) time in msecs.
     uint32_t waitTime = (now - _startTime);
-
+    
     switch(_state)
     {
         case OCS_INIT:
@@ -234,12 +236,14 @@ static void button_tick(uint8_t activeLevel)
             }
             else if(!activeLevel)
             {
+                button_click_state = 0;
                 new_state(OCS_UP);
                 _startTime = now;
             }
             else if((activeLevel) && (waitTime > _pressTicks)) // 长按
             {
                 // 按键按下
+                
                 new_state(LONG_PRESS_START);
             }
 
@@ -269,17 +273,18 @@ static void button_tick(uint8_t activeLevel)
             {
                 if (_nClicks == 1)
                 {
+                    button_click_state = CLICK;
 
                 }
                 else if (_nClicks == 2)
                 {
                     // this was a 2 click sequence.
-
+                    button_click_state = DOUBLE_CLICK;
                 }
                 else // 多连击
                 {
                     // this was a multi click sequence.
-
+                    button_click_state = MULTI_CLICK;
                 }
 
                 button_reset();
@@ -292,16 +297,14 @@ static void button_tick(uint8_t activeLevel)
             // 等待长按结束
             if (!activeLevel)
             {
-
+                button_click_state = LONG_PRESS_STOP;
                 new_state(OCS_PRESSEND);
                 _startTime = now;
             }
             else
             {
                 // still the button is pressed
-
             }
-
             break;
 
         case OCS_PRESSEND:

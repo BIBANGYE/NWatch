@@ -95,17 +95,22 @@ static void processButtons()
     isPressed[BTN_3] = 1;
     isPressed[BTN_4] = 1;
     
-    uint8_t clik = get_number_clicks();
+//    uint8_t clik = get_number_clicks();
+    uint8_t clik = button_click_state;
     
-    if(clik == 1)
+    if(clik)
+        printf("click = %d\r\n",clik);
+    
+    if(clik == CLICK)
         isPressed[BTN_1] = 0; // 上 单击
-    else if (clik == 2)
+    else if (clik == DOUBLE_CLICK)
         isPressed[BTN_2] = 0; // 下 双击
-    else if (clik == 3)
+    else if (clik == MULTI_CLICK)
         isPressed[BTN_3] = 0; // 确认 三连击
-//    else if (clik == 99)
-//        isPressed[BTN_4] = 0; // 复位 长按
-
+    else if (clik == LONG_PRESS_STOP)
+        isPressed[BTN_4] = 0; // 复位 长按
+    
+//    button_click_state = 0;
 
 //    isPressed[BTN_1] = KEY1;
 //    isPressed[BTN_2] = KEY2;
@@ -123,6 +128,7 @@ static void processButton(s_button* button, BOOL isPressed)
 
     if (isPressed)
     {
+        led_flash(LED_GREEN, LED_FLASH_FAST, LED_BRIGHTNESS_MAX);
         // Set debounce counter bit
         button->counter |= 1;
 
@@ -140,8 +146,6 @@ static void processButton(s_button* button, BOOL isPressed)
             if (!button->funcDone && button->onPress != NULL && button->onPress())
             {
                 button->funcDone = true;
-
-//                tune_play(button->tune, VOL_UI, PRIO_UI);
 
                 led_flash(LED_GREEN, LED_FLASH_FAST, LED_BRIGHTNESS_MAX);
 
