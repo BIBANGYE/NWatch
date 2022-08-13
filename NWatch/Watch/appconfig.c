@@ -1,10 +1,9 @@
-#include "common.h"
-#include "include.h"
+#include "appconfig.h"
 
 
-#define LENTH(Buffer) sizeof(Buffer)	 		  	//数组长度	
+#define LENTH(Buffer) sizeof(Buffer)    //计算数组长度	
 
-#define EEPROM_CHECK_NUM 0x1234
+#define EEPROM_CHECK_NUM 0x1234 // 数值随意设置
 
 #define BKPCheck_SAVE_ADDR   RTC_BKP_DR1 	//设置BKP第一个地址保持第一次读写的标志位
 
@@ -29,8 +28,9 @@ void appconfig_init()
     appConfig = *(appconfig_s *) malloc(sizeof(appconfig_s));
     memset(&appConfig, 0x00, LENTH(appconfig_s));
 
-    if(BKPCheck == EEPROM_CHECK_NUM)
+    if(BKPCheck == EEPROM_CHECK_NUM) // 配置文件已经设置
     {
+        // 读取配置文件
         int index = 0;
         appConfig.sleepTimeout = HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
         index++;
@@ -51,9 +51,8 @@ void appconfig_init()
         appConfig.volumes     =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
         index++;
     }
-
     else
-    {
+    {   // 设置配置文件
         BKPCheck = EEPROM_CHECK_NUM;
         HAL_RTCEx_BKUPWrite(&Rtc_Handle, BKPCheck_SAVE_ADDR, BKPCheck);
 

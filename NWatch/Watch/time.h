@@ -8,7 +8,8 @@
 
 #ifndef TIME_H_
 #define TIME_H_
-#include "typedefs.h"
+
+#include "common.h"
 
 typedef enum
 {

@@ -8,7 +8,8 @@
 
 #ifndef BUTTONS_H_
 #define BUTTONS_H_
-#include "typedefs.h"
+
+#include "common.h"
 
 typedef enum
 {
@@ -22,7 +23,6 @@ typedef enum
 
 void buttons_init(void);
 void buttons_update(void);
-void buttons_startup(void);
 void buttons_shutdown(void);
 button_f buttons_setFunc(btn_t, button_f);
 void buttons_setFuncs(button_f, button_f, button_f);

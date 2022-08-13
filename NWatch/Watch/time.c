@@ -6,7 +6,7 @@
  * Web: http://blog.zakkemble.co.uk/diy-digital-wristwatch/
  */
 
-#include "common.h"
+#include "time.h"
 
 #define SECONDS_IN_MIN	60
 #define SECONDS_IN_HOUR	(60 * SECONDS_IN_MIN)
@@ -16,7 +16,7 @@
 static const byte monthDayCount[] PROGMEM = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 timeDate_s timeDate;
-//static timestamp_t timestamp;
+static timestamp_t timestamp;
 bool update;
 
 static void getRtcTime(void);

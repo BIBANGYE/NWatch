@@ -29,17 +29,17 @@ static void c_setup(void)
     #endif
 
 //    global_init();
-
     memset(&oledBuffer, 0x00, FRAME_BUFFER_SIZE);
+    
     oled_init();
     led_init();
-    rtc_init(); // rtc 时钟初始化
+    rtc_init(); // rtc外设初始化
     appconfig_init(); // 保存配置数据
 //    alarm_init();
-
+    
     buttons_init();
     millis_init(); // 定时器初始化
-    time_init();  // 设置时钟时间
+    time_init();  // 设置初始时间
 
     display_set(watchface_normal);
     display_load();

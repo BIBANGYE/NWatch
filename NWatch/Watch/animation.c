@@ -69,6 +69,7 @@ void animation_update()
 	}
 }
 
+// 启用动画
 void animation_start(void (*animOnComplete)(void), bool goingOffScreen)
 {
 	if(appConfig.animations)      //这里不禁止会出现菜单返回失败，左右按键失效
@@ -99,17 +100,11 @@ byte animation_offsetY()
 {
 	return animationStatus.offsetY;
 }
-
-
 #else
-
-
  void animation_start(void (*animOnComplete)(void), bool goingOffScreen)
 {
 	(void)(goingOffScreen);
 	if(animOnComplete != NULL)
 		animOnComplete();
 }
-
-
 #endif

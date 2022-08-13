@@ -11,6 +11,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "common.h"
 
 #if defined ( __CC_ARM   )
     #pragma anon_unions
@@ -128,31 +129,7 @@ typedef struct
     };
 } alarm_s;
 
-// Could use bitfields for the bools to save a few bytes of RAM and EEPROM, but uses an extra ~82 bytes of flash
-typedef struct
-{
-    byte sleepTimeout;
-    bool invert;
-    #if COMPILE_ANIMATIONS
-    bool animations;
-    #endif
-    //byte clockface;
-    bool display180;
-    bool CTRL_LEDs;
-    bool showFPS;
-    timemode_t timeMode;
-    union
-    {
-        byte volumes;
-        struct  // get rid of these bitfields?
-        {
-            byte volUI: 2;
-            byte volAlarm: 2;
-            byte volHour: 2;
-            byte brightness: 2;
-        };
-    };
-} appconfig_s;
+
 
 typedef display_t (*draw_f)(void);
 typedef void (*display_f)(void);
@@ -194,10 +171,10 @@ typedef struct
 
 typedef struct
 {
-    bool active;
-    byte offsetY;
-    void (*animOnComplete)(void);
-    bool goingOffScreen;
+    bool active;  // 使能动画
+    byte offsetY; // 偏移
+    void (*animOnComplete)(void); //动画完成，执行函数
+    bool goingOffScreen; //向上移出屏幕
 } anim_s;
 
 typedef struct

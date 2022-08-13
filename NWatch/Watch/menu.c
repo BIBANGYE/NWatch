@@ -40,16 +40,15 @@ static void clear(void);
 
 bool menu_select()
 {
-    if(!animation_active() || animation_movingOn())
+    if (!animation_active() || animation_movingOn())
     {
-        if(!menuData.isOpen)
+        if (!menuData.isOpen)
         {
             menuData.isOpen = true;
             mMainOpen();
         }
-        else if(menuData.func.btn2 != NULL)
+        else if (menuData.func.btn2 != NULL)
             menuData.func.btn2();
-
     }
 
     return true;
@@ -69,7 +68,7 @@ bool menu_up()
 
 static void doBtn(menu_f btn)
 {
-    if(menuData.isOpen && (!animation_active() || animation_movingOn()) && btn != NULL)
+    if (menuData.isOpen && (!animation_active() || animation_movingOn()) && btn != NULL)
         btn();
 }
 
@@ -77,12 +76,12 @@ display_t menu_draw()
 {
     display_t busy = DISPLAY_DONE;
 
-    if(menuData.menuType == MENU_TYPE_STR)
+    if (menuData.menuType == MENU_TYPE_STR)
         menu_drawStr();
     else
         busy = menu_drawIcon();
 
-    if(menuData.func.draw != NULL)
+    if (menuData.func.draw != NULL)
         busy = busy || menuData.func.draw() ? DISPLAY_BUSY : DISPLAY_DONE;
 
     return busy;
@@ -102,7 +101,7 @@ static void loader(operation_t op, byte num, byte data)
     operation.id = num;
     operation.data = data;
 
-    if(menuData.func.loader != NULL)
+    if (menuData.func.loader != NULL)
         menuData.func.loader(num);
 }
 
@@ -113,11 +112,11 @@ static void menu_drawStr()
     byte scroll = menuData.scroll;
     byte count = ((MAX_MENU_ITEMS < menuData.optionCount) ? MAX_MENU_ITEMS : menuData.optionCount) + scroll;
 
-    for(byte i = scroll; i < count; i++)
+    for (byte i = scroll; i < count; i++)
     {
         byte y = 8 + (8 * (i - scroll));
 
-        if(i == menuData.selected)
+        if (i == menuData.selected)
             draw_string(">", false, 0, y);
 
         loader(OPERATION_DRAWNAME_STR, i, y);
@@ -134,34 +133,34 @@ static display_t menu_drawIcon()
 
     #if COMPILE_ANIMATIONS
 
-    if(appConfig.animations)
+    if (appConfig.animations)
     {
         byte speed;
 
-        if(x > animX)
+        if (x > animX)
         {
             speed = ((x - animX) / 4) + 1;
 
-            if(speed > 16)
+            if (speed > 16)
                 speed = 16;
 
             animX += speed;
 
-            if(x <= animX)
+            if (x <= animX)
                 animX = x;
             else
                 busy = DISPLAY_BUSY;
         }
-        else if(x < animX)
+        else if (x < animX)
         {
             speed = ((animX - x) / 4) + 1;
 
-            if(speed > 16)
+            if (speed > 16)
                 speed = 16;
 
             animX -= speed;
 
-            if(x >= animX)
+            if (x >= animX)
                 animX = x;
             else
                 busy = DISPLAY_BUSY;
@@ -180,7 +179,7 @@ static display_t menu_drawIcon()
 
     LOOP(menuData.optionCount, i)
     {
-        if(x < FRAME_WIDTH && x > -32)
+        if (x < FRAME_WIDTH && x > -32)
             loader(OPERATION_DRAWICON, i, x);
 
         x += 48;
@@ -191,9 +190,9 @@ static display_t menu_drawIcon()
     return busy;
 }
 
-void setMenuOption_P(byte num, const char* name, const byte* icon, menu_f actionFunc)
+void setMenuOption_P(byte num, const char *name, const byte *icon, menu_f actionFunc)
 {
-    if(num != operation.id)
+    if (num != operation.id)
         return;
 
     char buff[BUFFSIZE_STR_MENU];
@@ -202,12 +201,12 @@ void setMenuOption_P(byte num, const char* name, const byte* icon, menu_f action
 }
 
 #include <math.h>
-void setMenuOption(byte num, const char* name, const byte* icon, menu_f actionFunc)
+void setMenuOption(byte num, const char *name, const byte *icon, menu_f actionFunc)
 {
-    if(num != operation.id)
+    if (num != operation.id)
         return;
 
-    switch(operation.op)
+    switch (operation.op)
     {
         case OPERATION_DRAWICON:
         {
@@ -221,15 +220,15 @@ void setMenuOption(byte num, const char* name, const byte* icon, menu_f actionFu
         break;
 
         case OPERATION_DRAWNAME_ICON:
-            draw_string((char*)name, false, 0, FRAME_HEIGHT - 8);
+            draw_string((char *)name, false, 0, FRAME_HEIGHT - 8);
             break;
 
         case OPERATION_DRAWNAME_STR:
-            draw_string((char*)name, false, 6, operation.data);
+            draw_string((char *)name, false, 6, operation.data);
             break;
 
         case OPERATION_ACTION:
-            if(actionFunc != NULL)
+            if (actionFunc != NULL)
                 operation.data ? beginAnimation(actionFunc) : actionFunc();
 
             break;
@@ -252,22 +251,22 @@ void menu_close()
     display_load(); // Move somewhere else, sometimes we don't want to load the watch face when closing the menu
 }
 
-void setPrevMenuOpen(prev_menu_s* prevMenu, menu_f newPrevMenu)
+void setPrevMenuOpen(prev_menu_s *prevMenu, menu_f newPrevMenu)
 {
-    if(menuData.prevMenu != newPrevMenu) // Make sure new and old menu funcs are not the same, otherwise we get stuck in a menu loop
+    if (menuData.prevMenu != newPrevMenu)   // Make sure new and old menu funcs are not the same, otherwise we get stuck in a menu loop
         prevMenu->last = menuData.prevMenu; // Save previous menu open func
 
     menuData.selected = prevMenu->lastSelected; //
-    menuData.prevMenu = newPrevMenu; // Set new menu open func
+    menuData.prevMenu = newPrevMenu;            // Set new menu open func
 }
 
-void setPrevMenuExit(prev_menu_s* prevMenu)
+void setPrevMenuExit(prev_menu_s *prevMenu)
 {
-    if(!exitSelected()) // Opened new menu, save selected item
+    if (!exitSelected()) // Opened new menu, save selected item
         prevMenu->lastSelected = menuData.selected;
     else
     {
-        prevMenu->lastSelected = 0; // Reset selected item
+        prevMenu->lastSelected = 0;         // Reset selected item
         menuData.prevMenu = prevMenu->last; //
     }
 }
@@ -303,7 +302,7 @@ void beginAnimation2(menu_f onComplete)
     animation_start(onComplete, ANIM_MOVE_ON);
 }
 
-void setMenuInfo(byte optionCount, menu_type_t menuType, const char* title)
+void setMenuInfo(byte optionCount, menu_type_t menuType, const char *title)
 {
     clear();
     menuData.scroll = 0;
@@ -325,7 +324,7 @@ void nextOption()
 {
     menuData.selected++;
 
-    if(menuData.selected >= menuData.optionCount)
+    if (menuData.selected >= menuData.optionCount)
         menuData.selected = 0;
 
     checkScroll();
@@ -335,7 +334,7 @@ void prevOption()
 {
     menuData.selected--;
 
-    if(menuData.selected >= menuData.optionCount)
+    if (menuData.selected >= menuData.optionCount)
         menuData.selected = menuData.optionCount - 1;
 
     checkScroll();
@@ -350,9 +349,9 @@ static void checkScroll()
 {
     byte scroll = menuData.scroll;
 
-    if(menuData.selected >= scroll + MAX_MENU_ITEMS)
+    if (menuData.selected >= scroll + MAX_MENU_ITEMS)
         scroll = (menuData.selected + 1) - MAX_MENU_ITEMS;
-    else if(menuData.selected < scroll)
+    else if (menuData.selected < scroll)
         scroll = menuData.selected;
 
     menuData.scroll = scroll;

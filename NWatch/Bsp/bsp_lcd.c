@@ -316,33 +316,33 @@ void oled_init(void)
     LCD_Set_Pos(0, 0);
 }
 
-void LCD_PutPixel(uint8_t x, uint8_t y)
-{
-    uint8_t data1;  //data1当前点的数据
+//void LCD_PutPixel(uint8_t x, uint8_t y)
+//{
+//    uint8_t data1;  //data1当前点的数据
 
-    data1 = 0x01 << (y % 8);
-    OLED_WR_Byte(0xb0 + (y >> 3), OLED_CMD);
-    OLED_WR_Byte(((x & 0xf0) >> 4) | 0x10, OLED_CMD);
-    OLED_WR_Byte((x & 0x0f) | 0x00, OLED_CMD);
-    OLED_WR_Byte(data1, OLED_DATA);
-}
+//    data1 = 0x01 << (y % 8);
+//    OLED_WR_Byte(0xb0 + (y >> 3), OLED_CMD);
+//    OLED_WR_Byte(((x & 0xf0) >> 4) | 0x10, OLED_CMD);
+//    OLED_WR_Byte((x & 0x0f) | 0x00, OLED_CMD);
+//    OLED_WR_Byte(data1, OLED_DATA);
+//}
 
 
 
-void lcd_Fill(uint8_t bmp_data)
-{
-    uint8_t y, x;
+//void lcd_Fill(uint8_t bmp_data)
+//{
+//    uint8_t y, x;
 
-    for(y = 0; y < 8; y++)
-    {
-        OLED_WR_Byte(0xb0 + y, OLED_CMD);
-        OLED_WR_Byte(0x01, OLED_CMD);
-        OLED_WR_Byte(0x10, OLED_CMD);
+//    for(y = 0; y < 8; y++)
+//    {
+//        OLED_WR_Byte(0xb0 + y, OLED_CMD);
+//        OLED_WR_Byte(0x01, OLED_CMD);
+//        OLED_WR_Byte(0x10, OLED_CMD);
 
-        for(x = 0; x < X_WIDTH; x++)
-            OLED_WR_Byte(bmp_data, OLED_DATA);
-    }
-}
+//        for(x = 0; x < X_WIDTH; x++)
+//            OLED_WR_Byte(bmp_data, OLED_DATA);
+//    }
+//}
 
 void LCD_Set_Pos(uint8_t x, uint8_t y)
 {

@@ -7,43 +7,18 @@
 */
 
 #include "common.h"
-#include "sys.h"
-#include "led.h"
-#include "key.h"
-
 
 #define BTN_IS_PRESSED	4
 #define BTN_NOT_PRESSED	4
-
-
-
-
-/*下面的方式是通过直接操作库函数方式读取IO*/
-//#define KEY_UP      GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0)
-//#define KEY0        GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4)
-//#define KEY1        GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_3)
-//#define KEY2        GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_2)
-
-
-
-/*下面方式是通过位带操作方式读取IO*/
-/*
-#define KEY0 		PEin(4)   	//PE4
-#define KEY1 		PEin(3)		//PE3
-#define KEY2 		PEin(2)		//P32
-#define WK_UP 	PAin(0)		//PA0
-*/
-
-
 
 typedef struct
 {
     millis_t pressedTime;	// Time of press
     bool processed;			// Time of press has been stored (don't store again until next press)
-    byte counter;			// Debounce counter
+    byte counter;			// 消抖计数
     bool funcDone;			// Function has been ran (don't run again until next press)
     button_f onPress;		// Function to run when pressed
-    const uint* tune;		// Tune to play when pressed
+    const uint* tune;		// 蜂鸣器
 } s_button;
 
 static s_button buttons[BTN_COUNT];
@@ -95,11 +70,10 @@ static void processButtons()
     isPressed[BTN_3] = 1;
     isPressed[BTN_4] = 1;
     
-//    uint8_t clik = get_number_clicks();
     uint8_t clik = button_click_state;
     
-    if(clik)
-        printf("click = %d\r\n",clik);
+    // if(clik)
+    //     printf("click = %d\r\n",clik);
     
     if(clik == CLICK)
         isPressed[BTN_1] = 0; // 上 单击
@@ -124,6 +98,7 @@ static void processButtons()
 
 static void processButton(s_button* button, BOOL isPressed)
 {
+
     button->counter <<= 1;
 
     if (isPressed)
@@ -133,7 +108,7 @@ static void processButton(s_button* button, BOOL isPressed)
         button->counter |= 1;
 
         // Are enough bits set to count as pressed?
-        if (bitCount(button->counter) >= BTN_IS_PRESSED)
+        if (bitCount(button->counter) >= BTN_IS_PRESSED) // 按键消抖
         {
             // Store time of press
             if (!button->processed)
@@ -148,7 +123,6 @@ static void processButton(s_button* button, BOOL isPressed)
                 button->funcDone = true;
 
                 led_flash(LED_GREEN, LED_FLASH_FAST, LED_BRIGHTNESS_MAX);
-
             }
         }
     }
@@ -185,20 +159,19 @@ button_f buttons_setFunc(btn_t btn, button_f func)
 // Set functions to run for each button
 void buttons_setFuncs(button_f btn1, button_f btn2, button_f btn3)
 {
-    buttons[BTN_1].onPress = btn1;
-    buttons[BTN_2].onPress = btn2;
-    buttons[BTN_3].onPress = btn3;
+    buttons[BTN_1].onPress = btn1; //单击
+    buttons[BTN_2].onPress = btn2; //双击
+    buttons[BTN_3].onPress = btn3; //三连击
 }
 
 
 // See if a button has been pressed in the past x milliseconds
 bool buttons_isActive()
 {
-//  // If sleep has been disabled then just say that the buttons are always active
+
     if (!appConfig.sleepTimeout)
         return true;
 
-//  // Get timeout val in ms
     uint timeout = (appConfig.sleepTimeout * 5) * 1000 * 3;
 //  uint timeout =  1000;
 
