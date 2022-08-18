@@ -29,7 +29,7 @@ static byte bitCount(byte);
 
 void buttons_init()
 {
-    buttons_startup();
+    KEY_Init();
 }
 
 void buttons_update()
@@ -46,12 +46,6 @@ void buttons_update()
     }
 }
 
-//按键初始化函数
-// Sets button pins to INPUT with PULLUP
-void buttons_startup()
-{
-    KEY_Init();
-}
 
 // Sets button pins to OUTPUT LOW
 // This stops them wasting current through the pull-up resistor when pressed
