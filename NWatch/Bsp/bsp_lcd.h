@@ -48,8 +48,10 @@ extern uint8_t OLED_GRAM[1024];
 
 #define CS_LOW()        HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET)
 #define CS_HIGH()       HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET)
+
 #define LCD_RST_CLR()   HAL_GPIO_WritePin(RES_PORT, RES_PIN, GPIO_PIN_RESET)
 #define LCD_RST_SET()   HAL_GPIO_WritePin(RES_PORT, RES_PIN, GPIO_PIN_SET)
+
 #define LCD_DC_CLR()    HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_RESET)
 #define LCD_DC_SET()    HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_SET)
 

@@ -91,7 +91,7 @@ typedef struct
 typedef struct
 {
     day_t day; //星期
-    byte date; // 日期
+    byte date; //日期
     month_t month; //月份
     byte year; //年份
 } date_s;

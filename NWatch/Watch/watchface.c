@@ -83,7 +83,6 @@ static bool down()
     // Set watchface
     display_set(watchface_normal);
     display_load();
-
     return true;
 }
 

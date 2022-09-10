@@ -44,7 +44,8 @@ void appconfig_init()
         index++;
         appConfig.CTRL_LEDs   =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
         index++;
-        appConfig.showFPS     =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+//        appConfig.showFPS     =  HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
+		appConfig.showFPS     =  0;
         index++;
         appConfig.timeMode    = (timemode_t) HAL_RTCEx_BKUPRead(&Rtc_Handle, BKPDataRR[index]);
         index++;
@@ -130,7 +131,7 @@ void appconfig_reset()
     #endif
     appConfig.display180 = true;
     appConfig.CTRL_LEDs = false;
-    appConfig.showFPS = true;
+    appConfig.showFPS = false;
     appConfig.timeMode = TIMEMODE_24HR;
     appConfig.volumes = 255;
 

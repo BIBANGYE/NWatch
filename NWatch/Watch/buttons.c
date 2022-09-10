@@ -78,8 +78,6 @@ static void processButtons()
     else if (clik == LONG_PRESS_STOP)
         isPressed[BTN_4] = 0; // ¸´Î» ³¤°´
     
-//    button_click_state = 0;
-
 //    isPressed[BTN_1] = KEY1;
 //    isPressed[BTN_2] = KEY2;
 //    isPressed[BTN_3] = KEY0;

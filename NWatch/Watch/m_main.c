@@ -39,7 +39,7 @@ static uint8_t getItemCount()
 
 void mMainOpen()
 {
-	buttons_setFuncs(NULL, menu_select, NULL);
+//	buttons_setFuncs(NULL, menu_select, NULL);
 	beginAnimation(mOpen);
 }
 

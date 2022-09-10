@@ -15,7 +15,6 @@ int main(void)
     while(1)
     {
         c_loop();
-
     }
 }
 
@@ -30,13 +29,14 @@ static void c_setup(void)
 
 //    global_init();
     memset(&oledBuffer, 0x00, FRAME_BUFFER_SIZE);
-    
+
     oled_init();
+
     led_init();
     rtc_init(); // rtc外设初始化
     appconfig_init(); // 保存配置数据
 //    alarm_init();
-    
+
     buttons_init();
     millis_init(); // 定时器初始化
     time_init();  // 设置初始时间
@@ -51,7 +51,7 @@ static void c_loop(void)
 {
     time_update();
 
-    buttons_update();
+    buttons_update(); // 按键扫描
 
     #if COMPILE_STOPWATCH
     stopwatch_update();

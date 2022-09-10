@@ -102,7 +102,6 @@ void display_update()
         millis8_t end = millis() + 1;
         char buff[5];
         sprintf_P(buff, PSTR("%u"), (uint)(1000 / (millis8_t)(end - now)));
-        //	draw_string(buff,false,107,56);
         draw_string(buff, false, 100, 56);
     }
 

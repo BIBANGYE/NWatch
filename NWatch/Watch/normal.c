@@ -28,7 +28,7 @@ static void drawDate(void);
 static display_t ticker(void);
 static void drawTickerNum(tickerData_t*);
 
-void watchface_normal()
+void watchface_normal() // 主界面
 {
     display_setDrawFunc(draw);
     buttons_setFuncs(up, menu_select, down);
@@ -134,7 +134,7 @@ static void drawDate()
     //                                 星期    日期    月份  年份
 
     timeDate.date.date = 3;
-//    timeDate.date.year = 22;
+    timeDate.date.year = 22;
     sprintf_P(buff, PSTR(DATE_FORMAT), day, timeDate.date.date, month, timeDate.date.year);
     draw_string(buff, false, 30, 0);
 }

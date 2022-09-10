@@ -20,6 +20,17 @@
 
 #include "bsp_lcd.h"
 
+//OLED的显存
+//存放格式如下.
+//[0]0 1 2 3 ... 127
+//[1]0 1 2 3 ... 127
+//[2]0 1 2 3 ... 127
+//[3]0 1 2 3 ... 127
+//[4]0 1 2 3 ... 127
+//[5]0 1 2 3 ... 127
+//[6]0 1 2 3 ... 127
+//[7]0 1 2 3 ... 127
+
 
 uint8_t OLED_GRAM[1024];
 
@@ -110,24 +121,28 @@ void OLED_WR_Byte(uint8_t byte, uint8_t cmd)
 {
     uint8_t i = 8;
 
-    (cmd == OLED_DATA) ? LCD_DC_SET() : LCD_DC_CLR();
-    LCD_SCL_CLR();
+    if(cmd)
+        LCD_DC_SET();
+    else
+        LCD_DC_CLR();
 
-    while(i--)
+    CS_LOW();
+
+    for(i = 0; i < 8; i++)
     {
+        LCD_SCL_CLR();
+
         if(byte & 0x80)
-        {
             LCD_SDA_SET();
-        }
         else
-        {
             LCD_SDA_CLR();
-        }
 
         LCD_SCL_SET();
-        LCD_SCL_CLR();
         byte <<= 1;
     }
+
+    CS_HIGH();
+    LCD_DC_SET();
 }
 
 //开启OLED显示
@@ -135,8 +150,9 @@ void OLED_DisplayTurn(uint8_t i)
 {
     if(i == 0)
     {
-        OLED_WR_Byte(0xC8, OLED_CMD); //正常显示
-        OLED_WR_Byte(0xA1, OLED_CMD);
+        OLED_WR_Byte(0X8D, OLED_CMD); //SET DCDC命令
+        OLED_WR_Byte(0X14, OLED_CMD); //DCDC ON
+        OLED_WR_Byte(0XAF, OLED_CMD); //DISPLAY ON
     }
 
     if(i == 1)
@@ -274,12 +290,10 @@ void oled_init(void)
 {
     oled_GPIO_init();
 
-    CS_LOW();
-
-    LCD_SCL_SET();
-
+    LCD_RST_SET();
+    oled_delay_ms(100);
     LCD_RST_CLR();
-    oled_delay_ms(50);
+    oled_delay_ms(200);
     LCD_RST_SET();
 
     OLED_WR_Byte(0xAE, OLED_CMD); //--turn off oled panel
@@ -315,34 +329,6 @@ void oled_init(void)
     OLED_Clear();  //初始清屏
     LCD_Set_Pos(0, 0);
 }
-
-//void LCD_PutPixel(uint8_t x, uint8_t y)
-//{
-//    uint8_t data1;  //data1当前点的数据
-
-//    data1 = 0x01 << (y % 8);
-//    OLED_WR_Byte(0xb0 + (y >> 3), OLED_CMD);
-//    OLED_WR_Byte(((x & 0xf0) >> 4) | 0x10, OLED_CMD);
-//    OLED_WR_Byte((x & 0x0f) | 0x00, OLED_CMD);
-//    OLED_WR_Byte(data1, OLED_DATA);
-//}
-
-
-
-//void lcd_Fill(uint8_t bmp_data)
-//{
-//    uint8_t y, x;
-
-//    for(y = 0; y < 8; y++)
-//    {
-//        OLED_WR_Byte(0xb0 + y, OLED_CMD);
-//        OLED_WR_Byte(0x01, OLED_CMD);
-//        OLED_WR_Byte(0x10, OLED_CMD);
-
-//        for(x = 0; x < X_WIDTH; x++)
-//            OLED_WR_Byte(bmp_data, OLED_DATA);
-//    }
-//}
 
 void LCD_Set_Pos(uint8_t x, uint8_t y)
 {
@@ -396,7 +382,7 @@ void oled_flush(void)
     for(i = 0; i < 8; i++)
     {
         OLED_WR_Byte(0xb0 + i, OLED_CMD); //设置行起始地址
-        OLED_WR_Byte(0x00, OLED_CMD);  //设置低列起始地址
+        OLED_WR_Byte(0x02, OLED_CMD);  //设置低列起始地址
         OLED_WR_Byte(0x10, OLED_CMD);  //设置高列起始地址
 
         for(n = 0; n < 128; n++)
