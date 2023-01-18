@@ -8,6 +8,7 @@
 
 #ifndef PWRMGR_H_
 #define PWRMGR_H_
+
 #include "typedefs.h"
 
 typedef enum

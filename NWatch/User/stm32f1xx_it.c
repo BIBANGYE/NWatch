@@ -155,7 +155,6 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
     HAL_IncTick();
-    Button_Tick_IRQHandler();
 //    detect_usb();
 }
 

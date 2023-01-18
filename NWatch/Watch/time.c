@@ -199,7 +199,7 @@ static void getRtcTime()
 
     timeDate.date.year = '0' - 28;
     timeDate.date.month = (month_t)0;
-    timeDate.date.day = (day_t)6;
+    timeDate.date.day = (day_t)6; //ÐÇÆÚ
     timeDate.date.date = 8;
 //    timeDate.time.hour = milliseconds / 3600;
 //    timeDate.time.mins = (milliseconds % 3600) / 60;

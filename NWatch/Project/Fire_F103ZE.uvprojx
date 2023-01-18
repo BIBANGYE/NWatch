@@ -683,11 +683,6 @@
               <FileType>1</FileType>
               <FilePath>..\Bsp\key.c</FilePath>
             </File>
-            <File>
-              <FileName>OneButton.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Bsp\OneButton.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -954,7 +949,12 @@
             <File>
               <FileName>buttons.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Github\NWatch\NWatch\Watch\buttons.c</FilePath>
+              <FilePath>..\Watch\buttons.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwrmgr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Watch\pwrmgr.c</FilePath>
             </File>
           </Files>
         </Group>

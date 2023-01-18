@@ -24,27 +24,27 @@ extern uint8_t OLED_GRAM[1024];
  *  cs -- 片选（低电平有效）
  *  RES-- 复位引脚
  */
-#define SCLK_PIN    GPIO_PIN_12  //D0
+#define SCLK_PIN    GPIO_PIN_13  //D0
 #define SCLK_PORT   GPIOD
 #define RCC_SCLK_ENABLE()   __HAL_RCC_GPIOD_CLK_ENABLE()
 
-#define SDIN_PIN    GPIO_PIN_13   // D1
+#define SDIN_PIN    GPIO_PIN_11   // D1
 #define SDIN_PORT   GPIOD
 #define RCC_SDIN_ENABLE() __HAL_RCC_GPIOD_CLK_ENABLE()
 
-#define RES_PIN     GPIO_PIN_10
-#define RES_PORT    GPIOD
-#define RCC_RES_ENABLE() __HAL_RCC_GPIOD_CLK_ENABLE()
+#define RES_PIN     GPIO_PIN_12
+#define RES_PORT    GPIOA
+#define RCC_RES_ENABLE() __HAL_RCC_GPIOA_CLK_ENABLE()
 
-#define DC_PIN      GPIO_PIN_11
-#define DC_PORT     GPIOD
-#define RCC_DC_ENABLE() __HAL_RCC_GPIOD_CLK_ENABLE()
+#define DC_PIN      GPIO_PIN_5
+#define DC_PORT     GPIOG
+#define RCC_DC_ENABLE() __HAL_RCC_GPIOG_CLK_ENABLE()
 
-#define CS_PIN      GPIO_PIN_8
+#define CS_PIN      GPIO_PIN_9
 #define CS_PORT     GPIOD
 #define RCC_CS_ENABLE() __HAL_RCC_GPIOD_CLK_ENABLE()
 
-
+// BLK PG7
 
 #define CS_LOW()        HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET)
 #define CS_HIGH()       HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET)

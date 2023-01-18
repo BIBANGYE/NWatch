@@ -42,6 +42,7 @@
 #include "battery.h"
 //#include "buzzer.h"
 #include "led.h"
+#include "key.h"
 //#include "ds3231.h"
 
 #include "functions.h"
@@ -70,7 +71,7 @@
 #include "display.h"
 
 #include "alarm.h"
-//#include "pwrmgr.h"
+#include "pwrmgr.h"
 
 //#include "disco.h"
 #include "tune.h"

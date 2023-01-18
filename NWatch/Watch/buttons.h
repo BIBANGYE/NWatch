@@ -29,7 +29,7 @@ void buttons_setFuncs(button_f, button_f, button_f);
 //millis_t buttons_pressTime(btn_t);
 bool buttons_isActive(void);
 void buttons_wake(void);
-
+void buttons_startup(void);
 
 
 

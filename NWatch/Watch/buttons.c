@@ -29,6 +29,12 @@ static byte bitCount(byte);
 
 void buttons_init()
 {
+    buttons_startup();
+}
+
+// 按键初始化函数
+void buttons_startup(void)
+{
     KEY_Init();
 }
 
@@ -47,6 +53,8 @@ void buttons_update()
 }
 
 
+
+
 // Sets button pins to OUTPUT LOW
 // This stops them wasting current through the pull-up resistor when pressed
 void buttons_shutdown()
@@ -54,34 +62,17 @@ void buttons_shutdown()
 
 }
 
-static void processButtons()
+static void processButtons(void)
 {
     // Get button pressed states
     BOOL isPressed[BTN_COUNT];
 
-    isPressed[BTN_1] = 1;
-    isPressed[BTN_2] = 1;
-    isPressed[BTN_3] = 1;
-    isPressed[BTN_4] = 1;
+    isPressed[BTN_1] = KEY1;
+    isPressed[BTN_2] = KEY2;
+    isPressed[BTN_3] = KEY0;
+    isPressed[BTN_4] = KEY3;
     
-    uint8_t clik = button_click_state;
     
-    // if(clik)
-    //     printf("click = %d\r\n",clik);
-    
-    if(clik == CLICK)
-        isPressed[BTN_1] = 0; // 上 单击
-    else if (clik == DOUBLE_CLICK)
-        isPressed[BTN_2] = 0; // 下 双击
-    else if (clik == MULTI_CLICK)
-        isPressed[BTN_3] = 0; // 确认 三连击
-    else if (clik == LONG_PRESS_STOP)
-        isPressed[BTN_4] = 0; // 复位 长按
-    
-//    isPressed[BTN_1] = KEY1;
-//    isPressed[BTN_2] = KEY2;
-//    isPressed[BTN_3] = KEY0;
-//    isPressed[BTN_4] = KEY3;
 
     // Process each button
     LOOPR(BTN_COUNT, i)
@@ -90,9 +81,7 @@ static void processButtons()
 
 static void processButton(s_button* button, BOOL isPressed)
 {
-
     button->counter <<= 1;
-
     if (isPressed)
     {
         led_flash(LED_GREEN, LED_FLASH_FAST, LED_BRIGHTNESS_MAX);
@@ -151,9 +140,9 @@ button_f buttons_setFunc(btn_t btn, button_f func)
 // Set functions to run for each button
 void buttons_setFuncs(button_f btn1, button_f btn2, button_f btn3)
 {
-    buttons[BTN_1].onPress = btn1; //单击
-    buttons[BTN_2].onPress = btn2; //双击
-    buttons[BTN_3].onPress = btn3; //三连击
+    buttons[BTN_1].onPress = btn1; 
+    buttons[BTN_2].onPress = btn2; 
+    buttons[BTN_3].onPress = btn3; 
 }
 
 
