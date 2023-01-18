@@ -20,13 +20,9 @@
 #define BUFFSIZE_DATE_FORMAT		((BUFFSIZE_STR_DAYS - 1) + (BUFFSIZE_STR_MONTHS - 1) + 12)
 #define BUFFSIZE_TIME_FORMAT_SMALL		9
 
-
-
 // String formats
 #define DATE_FORMAT ("%s %02hhu %s 20%02hhu")
 #define TIME_FORMAT_SMALL ("%02hhu:%02hhu%c")
-
-
 
 
 #define CHAR_DEGREES	127

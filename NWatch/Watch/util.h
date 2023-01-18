@@ -12,7 +12,6 @@
 #define NOINVERT	false
 #define INVERT		true
 
-//#define F_CPU  168000000
 #define F_CPU  72000000
 #define sprintf_P  sprintf
 #define PSTR(a)  a

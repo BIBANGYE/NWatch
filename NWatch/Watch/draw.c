@@ -26,8 +26,8 @@ void draw_string_P(const char* string, bool invert, byte x, byte y)
     draw_string(buff, invert, x, y);
 }
 
-// invert:反显
-// x ,y 坐标
+// 显示字符
+// x ,y 坐标；invert:设置反显
 void draw_string(char* string, bool invert, byte x, byte y)
 {
     byte charCount = 0;
@@ -35,8 +35,8 @@ void draw_string(char* string, bool invert, byte x, byte y)
     while(*string)
     {
         char c = *string - 0x20;
-        byte xx = x + (charCount * 7);
-        // xx 下一个字符的坐标
+        byte xx = x + (charCount * 7);// xx 下一个字符的坐标
+        
         draw_bitmap(xx, y, smallFont[(byte)c], SMALLFONT_WIDTH, SMALLFONT_HEIGHT, invert, 0);
 
         if(invert)
@@ -70,10 +70,11 @@ inline static byte readPixels(const byte* loc, bool invert)
     return pixels;
 }
 
-// Ultra fast bitmap drawing
-// Only downside is that height must be a multiple of 8, otherwise it gets rounded down to the nearest multiple of 8
-// Drawing bitmaps that are completely on-screen and have a Y co-ordinate that is a multiple of 8 results in best performance
-// PS - Sorry about the poorly named variables ;_;
+
+/*Ultra fast bitmap drawing
+Only downside is that height must be a multiple of 8, otherwise it gets rounded down to the nearest multiple of 8
+Drawing bitmaps that are completely on-screen and have a Y co-ordinate that is a multiple of 8 results in best performance
+PS - Sorry about the poorly named variables */
 void draw_bitmap(byte x, byte yy, const byte* bitmap, byte w, byte h, bool invert, byte offsetY)
 {
     // Apply animation offset
@@ -90,15 +91,14 @@ void draw_bitmap(byte x, byte yy, const byte* bitmap, byte w, byte h, bool inver
 
     byte thing3 = (yy + h);
 
-    //
-    LOOP(h2, hh)
+    for(byte hh=0;hh<h2;hh++)
     {
         //
-        byte hhh = (hh * 8) + y; // Current Y pos (every 8 pixels)
-        byte hhhh = hhh + 8; // Y pos at end of pixel column (8 pixels)
+        byte y_pos_start = (hh * 8) + y;  // Current Y pos (every 8 pixels)
+        byte y_pos_end = y_pos_start + 8; // Y pos at end of pixel column (8 pixels)
 
         //
-        if(offsetY && (hhhh < yy || hhhh > FRAME_HEIGHT || hhh > thing3))
+        if(offsetY && (y_pos_end < yy || y_pos_end > FRAME_HEIGHT || y_pos_start > thing3))
             continue;
 
         //
@@ -106,22 +106,21 @@ void draw_bitmap(byte x, byte yy, const byte* bitmap, byte w, byte h, bool inver
 
         if(offsetY)
         {
-            if(hhh < yy)
-                offsetMask = (0xFF << (yy - hhh));
-            else if(hhhh > thing3)
-                offsetMask = (0xFF >> (hhhh - thing3));
+            if(y_pos_start < yy)
+                offsetMask = (0xFF << (yy - y_pos_start));
+            else if(y_pos_end > thing3)
+                offsetMask = (0xFF >> (y_pos_end - thing3));
         }
 
-        uint aa = ((hhh / 8) * FRAME_WIDTH);
+        uint aa = ((y_pos_start / 8) * FRAME_WIDTH);
 
         const byte* b = bitmap + (hh * w);
 
         // If() outside of loop makes it faster (doesn't have to keep re-evaluating it)
         // Downside is code duplication
-        if(!pixelOffset && hhh < FRAME_HEIGHT)
+        if(!pixelOffset && y_pos_start < FRAME_HEIGHT)
         {
-            //
-            LOOP(w, ww)
+            for(byte ww=0;ww<w;ww++)
             {
                 // Workout X co-ordinate in frame buffer to place next 8 pixels
                 byte xx = ww + x;
@@ -140,10 +139,9 @@ void draw_bitmap(byte x, byte yy, const byte* bitmap, byte w, byte h, bool inver
         }
         else
         {
-            uint aaa = ((hhhh / 8) * FRAME_WIDTH);
+            uint aaa = ((y_pos_end / 8) * FRAME_WIDTH);
 
-            //
-            LOOP(w, ww)
+            for(byte ww=0;ww<w;ww++)
             {
                 // Workout X co-ordinate in frame buffer to place next 8 pixels
                 byte xx = ww + x;
@@ -156,13 +154,13 @@ void draw_bitmap(byte x, byte yy, const byte* bitmap, byte w, byte h, bool inver
                 byte pixels = readPixels(b + ww, invert) & offsetMask;
 
                 //
-                if(hhh < FRAME_HEIGHT)
+                if(y_pos_start < FRAME_HEIGHT)
                     oledBuffer[xx + aa] |= pixels << pixelOffset;
 
                 //setBuffByte(buff, xx, hhh, pixels << pixelOffset, colour);
 
                 //
-                if(hhhh < FRAME_HEIGHT)
+                if(y_pos_end < FRAME_HEIGHT)
                     oledBuffer[xx + aaa] |= pixels >> (8 - pixelOffset);
 
                 //setBuffByte(buff, xx, hhhh, pixels >> (8 - pixelOffset), colour);

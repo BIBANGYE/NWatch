@@ -60,7 +60,6 @@ static display_t draw()
     static byte chargeImagePos = FRAME_HEIGHT;
     #endif
 
-
     drawDate(); // 日期
 
     display_t busy ; // Draw time animated
@@ -128,15 +127,12 @@ static void drawDate()
     char month[BUFFSIZE_STR_MONTHS];
     strcpy(month, months[timeDate.date.month]); // 月份
 
-
     // Draw date
     char buff[BUFFSIZE_DATE_FORMAT];
-    //                                 星期    日期    月份  年份
 
-    timeDate.date.date = 3;
-    timeDate.date.year = 22;
+    //                                  星期    日期    月份  年份
     sprintf_P(buff, PSTR(DATE_FORMAT), day, timeDate.date.date, month, timeDate.date.year);
-    draw_string(buff, false, 30, 0);
+    draw_string(buff, false, 12, 0);
 }
 
 #if COMPILE_ANIMATIONS
