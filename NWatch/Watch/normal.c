@@ -62,11 +62,11 @@ static display_t draw()
 
     drawDate(); // 日期
 
-    display_t busy ; // Draw time animated
+    display_t busy ; 
 
-    busy = ticker();
+    busy = ticker(); // Draw time animated
 
-    drawBattery(); // Draw battery icon
+    drawBattery();  // Draw battery icon
 
     byte x = 20;
 
@@ -175,7 +175,7 @@ static display_t ticker()
             yPos_secs = 0;
             moving = true;
 
-            // 时间变化移动标志
+            // 时间变化标志
             moving2[0] = div10(timeDate.time.hour) != div10(hour2);
             moving2[1] = mod10(timeDate.time.hour) != mod10(hour2);
             moving2[2] = div10(timeDate.time.mins) != div10(mins);
@@ -198,9 +198,8 @@ static display_t ticker()
                 yPos += 5;
             else if(yPos <= 22)
                 yPos += 3;
-            else if(yPos <= 24 + TICKER_GAP)
+            else if(yPos <= MIDFONT_HEIGHT + TICKER_GAP)
                 yPos++;
-
             if(yPos >= MIDFONT_HEIGHT + TICKER_GAP)
                 yPos = 255;
 
@@ -208,9 +207,8 @@ static display_t ticker()
                 yPos_secs++;
             else if(yPos_secs <= 13)
                 yPos_secs += 3;
-            else if(yPos_secs <= 16 + TICKER_GAP)
+            else if(yPos_secs <= FONT_SMALL2_HEIGHT + TICKER_GAP)
                 yPos_secs++;
-
             if(yPos_secs >= FONT_SMALL2_HEIGHT + TICKER_GAP)
                 yPos_secs = 255;
 

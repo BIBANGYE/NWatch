@@ -93,15 +93,12 @@ void draw_bitmap(byte x, byte yy, const byte* bitmap, byte w, byte h, bool inver
 
     for(byte hh=0;hh<h2;hh++)
     {
-        //
         byte y_pos_start = (hh * 8) + y;  // Current Y pos (every 8 pixels)
         byte y_pos_end = y_pos_start + 8; // Y pos at end of pixel column (8 pixels)
 
-        //
         if(offsetY && (y_pos_end < yy || y_pos_end > FRAME_HEIGHT || y_pos_start > thing3))
             continue;
 
-        //
         byte offsetMask = 0xFF;
 
         if(offsetY)
